@@ -1,35 +1,53 @@
-#VRML_SIM R2023a utf8
+#VRML_SIM R2023b utf8
 
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/RectangleArena.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/Pcb.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/factory/containers/protos/WoodenBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/gctronic/e-puck/protos/E-puck.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
 
 WorldInfo {
+  basicTimeStep 16
 }
 Viewpoint {
-  orientation -0.2700146810038569 0.24551058590797317 0.9310298729093011 1.7366416027994778
-  position 0.727978190590886 -6.512875941292098 4.47175877323494
+  orientation -0.09477438746064829 -0.10047540927504156 0.9904153207682482 4.761182386666583
+  position 0.4190983885410212 5.849679342884316 1.2362847464288287
 }
 TexturedBackground {
+  texture "morning_cloudy_empty"
 }
 TexturedBackgroundLight {
 }
-RectangleArena {
-  translation 0 0 -0.11
-  rotation 0 0 1 4.692820414042842e-06
-  floorSize 4 4
+WoodenBox {
+  translation -2.3 0 0.76
+  name "wooden box(1)"
+  size 1.5 1.5 1.5
 }
-Robot {
+Solid {
+  translation 1.29 -0.2 1.31
   children [
     Shape {
-      appearance Pcb {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
       }
-      geometry Plane {
-        size 0.75 1.25
+      geometry Sphere {
+        radius 0.5
       }
     }
   ]
-  controller "new_controller"
-  supervisor TRUE
+  boundingObject Sphere {
+    radius 0.5
+  }
+  physics Physics {
+  }
+}
+RectangleArena {
+  floorSize 20 20
+  floorTileSize 3 3
+  wallHeight 1.5
+}
+E-puck {
+  translation 0 2.15 0
+  controller "testController"
 }
