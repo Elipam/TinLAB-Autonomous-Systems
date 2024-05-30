@@ -10,8 +10,8 @@ WorldInfo {
   basicTimeStep 16
 }
 Viewpoint {
-  orientation -0.09477438746064829 -0.10047540927504156 0.9904153207682482 4.761182386666583
-  position 0.4190983885410212 5.849679342884316 1.2362847464288287
+  orientation 0.0923159723499402 0.8388570467558337 -0.5364667896125221 0.4046313619156835
+  position -5.0836513581900205 3.491016258590333 2.1163272039756844
 }
 TexturedBackground {
   texture "morning_cloudy_empty"
@@ -24,21 +24,34 @@ WoodenBox {
   size 1.5 1.5 1.5
 }
 Solid {
-  translation 1.29 -0.2 1.31
+  translation 0.88 2.31 0.58
   children [
-    Shape {
+    DEF Balletjeeee Shape {
       appearance PBRAppearance {
-        roughness 1
-        metalness 0
+        baseColorMap ImageTexture {
+          url [
+            "../../../../../../Downloads/jpg_44-2.jpg"
+          ]
+        }
       }
       geometry Sphere {
         radius 0.5
       }
     }
   ]
-  boundingObject Sphere {
+  boundingObject DEF balleke Sphere {
     radius 0.5
   }
+  physics Physics {
+  }
+}
+Solid {
+  translation 0 1.42 1.05
+  children [
+    USE Balletjeeee
+  ]
+  name "solid(1)"
+  boundingObject USE balleke
   physics Physics {
   }
 }
@@ -49,5 +62,5 @@ RectangleArena {
 }
 E-puck {
   translation 0 2.15 0
-  controller "testController"
+  controller "HiddeSkibidi"
 }
