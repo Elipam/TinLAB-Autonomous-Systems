@@ -10,8 +10,8 @@ WorldInfo {
   basicTimeStep 16
 }
 Viewpoint {
-  orientation 0.22069927839378753 0.256972308310831 -0.9408810027191881 1.4796811162827719
-  position -1.5354346494464606 9.903399587172446 5.66479185983494
+  orientation 0.2752409400138797 0.275677824036148 -0.9210017167600562 1.6514059374997483
+  position 2.974649354869317 2.7837225766757485 1.7260935154292
 }
 TexturedBackground {
   texture "morning_cloudy_empty"
@@ -110,4 +110,39 @@ RectangleArena {
 E-puck {
   translation 0 2.15 0
   controller "HiddeSkibidi"
+}
+Robot {
+  translation 2.91 0 0.21
+  children [
+    DEF bound Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+      }
+      geometry Box {
+        size 0.2 0.1 0.05
+      }
+    }
+    DEF Wheel1 HingeJoint {
+      endPoint Solid {
+      }
+    }
+    DEF Wheel1 HingeJoint {
+      endPoint Solid {
+        name "solid(1)"
+      }
+    }
+    DEF Wheel1 HingeJoint {
+      endPoint Solid {
+        name "solid(2)"
+      }
+    }
+    DEF Wheel1 HingeJoint {
+      endPoint Solid {
+        name "solid(3)"
+      }
+    }
+  ]
+  boundingObject USE bound
+  physics Physics {
+  }
 }
