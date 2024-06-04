@@ -10,8 +10,8 @@ WorldInfo {
   basicTimeStep 16
 }
 Viewpoint {
-  orientation 0.0923159723499402 0.8388570467558337 -0.5364667896125221 0.4046313619156835
-  position -5.0836513581900205 3.491016258590333 2.1163272039756844
+  orientation 0.22069927839378753 0.256972308310831 -0.9408810027191881 1.4796811162827719
+  position -1.5354346494464606 9.903399587172446 5.66479185983494
 }
 TexturedBackground {
   texture "morning_cloudy_empty"
@@ -53,6 +53,53 @@ Solid {
   name "solid(1)"
   boundingObject USE balleke
   physics Physics {
+    density -1
+    mass 3
+  }
+}
+Solid {
+  translation -4.71 0 2.77
+  rotation 0 1 0 -1.5707953071795862
+  children [
+    DEF G0 Group {
+      children [
+        Pose {
+          translation 0 0 0.42
+          children [
+            Shape {
+              geometry Sphere {
+                radius 0.1
+              }
+            }
+          ]
+        }
+        Pose {
+          translation 0 0 -0.41
+          children [
+            Shape {
+              geometry Sphere {
+                radius 0.1
+              }
+            }
+          ]
+        }
+        Shape {
+          geometry Cylinder {
+            height 0.8
+            radius 0.02
+          }
+        }
+      ]
+    }
+  ]
+  name "solid(2)"
+  boundingObject USE G0
+  physics Physics {
+    density -1
+    mass 2
+    centerOfMass [
+      0 0 0.2
+    ]
   }
 }
 RectangleArena {
