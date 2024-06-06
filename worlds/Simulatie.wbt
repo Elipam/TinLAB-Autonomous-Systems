@@ -10,8 +10,8 @@ WorldInfo {
   basicTimeStep 16
 }
 Viewpoint {
-  orientation 0.2752409400138797 0.275677824036148 -0.9210017167600562 1.6514059374997483
-  position 2.974649354869317 2.7837225766757485 1.7260935154292
+  orientation -0.3336488532294118 0.16991298209824804 0.927258335769045 2.2592577241409253
+  position 0.321932813699076 -0.4839543395367858 0.4764712972424738
 }
 TexturedBackground {
   texture "morning_cloudy_empty"
@@ -46,7 +46,7 @@ Solid {
   }
 }
 Solid {
-  translation 0 1.42 1.05
+  translation 0 1.42 2.46
   children [
     USE Balletjeeee
   ]
@@ -112,37 +112,113 @@ E-puck {
   controller "HiddeSkibidi"
 }
 Robot {
-  translation 2.91 0 0.21
+  translation 0 0 0.06
   children [
-    DEF bound Shape {
+    DistanceSensor {
+    }
+    DEF BODY Shape {
       appearance PBRAppearance {
         baseColor 1 0 0
+        metalness 0
       }
       geometry Box {
         size 0.2 0.1 0.05
       }
     }
-    DEF Wheel1 HingeJoint {
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0.05 0.06 0
+      }
+      device [
+        RotationalMotor {
+        }
+      ]
       endPoint Solid {
+        translation 0.05 0.06 0
+        rotation 1 0 0 1.5707999856068915
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 1 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.05
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
       }
     }
-    DEF Wheel1 HingeJoint {
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0.05 -0.06 0
+      }
+      device [
+        RotationalMotor {
+        }
+      ]
       endPoint Solid {
-        name "solid(1)"
+        translation 0.05000001219645437 -0.05999995888231524 3.64022064517418e-06
+        rotation 1 6.604073036319333e-09 -6.551384359806268e-09 1.5707999857592654
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
       }
     }
-    DEF Wheel1 HingeJoint {
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor -0.05 -0.06 0
+      }
+      device [
+        RotationalMotor {
+        }
+      ]
       endPoint Solid {
-        name "solid(2)"
+        translation -0.05 -0.06 0
+        rotation 1 0 0 1.5707999835202933
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
       }
     }
-    DEF Wheel1 HingeJoint {
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor -0.05 0.06 0
+      }
+      device [
+        RotationalMotor {
+        }
+      ]
       endPoint Solid {
-        name "solid(3)"
+        translation -0.049999996851340836 0.060000021341082885 4.130467837359915e-06
+        rotation 1 -5.0653910242930504e-09 5.119238130299488e-09 1.5707999882284158
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
       }
     }
   ]
-  boundingObject USE bound
+  boundingObject USE BODY
   physics Physics {
   }
 }

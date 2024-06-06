@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot name="C:/Users/robbi/Downloads/chariot.urdf" xmlns:xacro="http://ros.org/wiki/xacro">
+  <link name="base_link">
+  </link>
+  <joint name="R_motor" type="continuous">
+    <parent link="base_link"/>
+    <child link="solid(2)"/>
+    <axis xyz="0.000001 0 -1"/>
+    <limit effort="10" velocity="10"/>
+    <origin xyz="-0.04 0.0337 0.0046" rpy="0 -1.570795 0"/>
+  </joint>
+  <link name="solid(2)">
+  </link>
+  <joint name="L_motor" type="continuous">
+    <parent link="base_link"/>
+    <child link="solid(3)"/>
+    <axis xyz="0.000001 0 -1"/>
+    <limit effort="10" velocity="10"/>
+    <origin xyz="0.04 0.0337 0.0046" rpy="0 -1.570795 0"/>
+  </joint>
+  <link name="solid(3)">
+  </link>
+  <joint name="lidar_motor" type="continuous">
+    <parent link="base_link"/>
+    <child link="solid"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="10"/>
+    <origin xyz="0 0.0233 0.028" rpy="0 0 -2.97"/>
+  </joint>
+  <link name="solid">
+  </link>
+  <link name="lidar">
+  </link>
+  <joint name="solid_lidar_joint" type="fixed">
+    <parent link="solid"/>
+    <child link="lidar"/>
+    <origin xyz="0 0 0.025" rpy="0 0 0"/>
+  </joint>
+</robot>
