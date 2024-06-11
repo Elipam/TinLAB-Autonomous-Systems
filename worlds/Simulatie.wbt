@@ -1,4 +1,4 @@
-#VRML_SIM R2023b utf8
+#VRML_SIM R2023a utf8
 
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
@@ -10,8 +10,8 @@ WorldInfo {
   basicTimeStep 16
 }
 Viewpoint {
-  orientation -0.09490803449680396 0.08511218871794506 0.9918409047420833 1.6876898780918104
-  position 0.13428220214605857 -1.0307989549106464 0.25575214130279705
+  orientation -0.2551897026530725 0.2311585701975075 0.9388524543739982 1.732103647525122
+  position 0.24060634836585726 -2.3044202214450435 1.6122476021707928
 }
 TexturedBackground {
   texture "morning_cloudy_empty"
@@ -63,26 +63,6 @@ Solid {
   children [
     DEF G0 Group {
       children [
-        Pose {
-          translation 0 0 0.42
-          children [
-            Shape {
-              geometry Sphere {
-                radius 0.1
-              }
-            }
-          ]
-        }
-        Pose {
-          translation 0 0 -0.41
-          children [
-            Shape {
-              geometry Sphere {
-                radius 0.1
-              }
-            }
-          ]
-        }
         Shape {
           geometry Cylinder {
             height 0.8
@@ -132,6 +112,7 @@ Robot {
       }
       device [
         RotationalMotor {
+          name "Wheel1"
         }
       ]
       endPoint Solid {
@@ -164,6 +145,7 @@ Robot {
       }
       device [
         RotationalMotor {
+          name "Wheel2"
         }
       ]
       endPoint Solid {
@@ -184,6 +166,7 @@ Robot {
       }
       device [
         RotationalMotor {
+          name "Wheel3"
         }
       ]
       endPoint Solid {
@@ -204,6 +187,7 @@ Robot {
       }
       device [
         RotationalMotor {
+          name "Wheel4"
         }
       ]
       endPoint Solid {
@@ -221,4 +205,5 @@ Robot {
   boundingObject USE BODY
   physics Physics {
   }
+  controller "drive_robot"
 }
