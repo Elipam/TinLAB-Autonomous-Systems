@@ -10,49 +10,57 @@ import threading
 import requests
 import time
 
-app = Flask(__name__)
+class grid():
+    def __init__(self):
+        self.makeGrid()
 
-ipList = []
-robotDict = {}
+class RobotServer:
+    def __init__(self):
+        self.app = Flask(__name__)
+        self.ipList = []
+        self.robotDict = {}
+        self.setup_routes()
 
-@app.route('/send_data', methods=['POST'])
-def receive_data():
-    data = request.json
-    print("Received Data:")
-    if (data['robots']):
-        for robot in data['robots']:
-            robotDict[robot['name']] = [robot['current_position'], robot['goal'], robot['direction']]
-    print(robotDict)
-    return jsonify({'message': 'Data received successfully'})
+    def setup_routes(self):
+        @self.app.route('/send_data', methods=['POST'])
+        def receive_data():
+            data = request.json
+            print("Received Data:")
+            if (data['robots']):
+                for robot in data['robots']:
+                    self.robotDict[robot['name']] = [robot['current_position'], robot['goal'], robot['direction']]
+            print(self.robotDict)
+            return jsonify({'message': 'Data received successfully'})
 
-@app.route('/robot_signup', methods=['POST'])
-def receive_signup():
-    data = request.json
-    ipList.append(data["ip"])
-    print("Received Data:", data)
-    return jsonify({'message': 'Signup received successfully'})
+        @self.app.route('/robot_signup', methods=['POST'])
+        def receive_signup():
+            data = request.json
+            self.ipList.append(data["ip"])
+            print("Received Data:", data)
+            return jsonify({'message': 'Signup received successfully'})
 
-@app.route('/robot_step', methods=['GET'])
-def send_right():
-    return 200
+        @self.app.route('/robot_step', methods=['GET'])
+        def send_right():
+            return 200
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+        @self.app.route('/')
+        def home():
+            return render_template('index.html')
 
-def run_flask_app():
-    app.run(host='0.0.0.0', port=5000)
+    def run_flask_app(self):
+        self.app.run(host='0.0.0.0', port=5000)
 
 if __name__ == '__main__':
+    server = RobotServer()
+
     # Start Flask app in a separate thread
-    flask_thread = threading.Thread(target=run_flask_app)
+    flask_thread = threading.Thread(target=server.run_flask_app)
     flask_thread.daemon = True
     flask_thread.start()
-
-    # Give Flask app some time to start
     time.sleep(2)
 
-    while (ipList == []):
+    # Temp, only here to wait before testing 
+    while not server.ipList:
         time.sleep(1)
 
     # Now you can send a request using the requests library
@@ -78,8 +86,8 @@ if __name__ == '__main__':
             }
         ]
     }
-    ipList[0] = "127.0.0.1" + ":5000"
-    url = 'http://' + ipList[0] + '/send_data'
+    server.ipList[0] = "127.0.0.1" + ":5000"
+    url = 'http://' + server.ipList[0] + '/send_data'
     try:
         response = requests.post(url, json=data)
     except Exception as e:
