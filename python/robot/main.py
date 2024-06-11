@@ -111,7 +111,7 @@ print(sta_if.ifconfig()[0]) # prints the IP on the serial
 jsonData = {'ip':sta_if.ifconfig()[0]}
 
 try:
-    response = requests.post(SERVER_URL, json=jsonData)
+    response = requests.post(SERVER_URL + "/robot_signup", json=jsonData)
     print(response.text)
     response.close()
 except Exception as e:
