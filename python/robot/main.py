@@ -15,7 +15,9 @@ import network
 import time
 from machine import Pin, PWM, ADC
 
+import urequests as requests
 
+SERVER_URL = "192.168.0.69"
 BUILT_IN_LED=25 # Built in led
 FLED=20 # Front led Red
 BLED=21 # Back led Green
@@ -64,7 +66,7 @@ def MoveForward(power,Stime):
     # 5000 should be motor stopped. To be tested.
     # https://microcontrollerslab.com/servo-motor-raspberry-pi-pico-micropython/
     LeftMotor.duty_u16(7000)
-    RightMotor.duty_u16(3000)
+    RightMotor.duty_u16(7000)
     time.sleep(Stime)
     LeftMotor.duty_u16(5000)
     RightMotor.duty_u16(5000)
@@ -106,6 +108,14 @@ while 1:
 sta_if = network.WLAN(network.STA_IF)
 
 print(sta_if.ifconfig()[0]) # prints the IP on the serial
+jsonData = {'ip':sta_if.ifconfig()[0]}
+
+try:
+    response = requests.post(SERVER_URL, json=jsonData)
+    print(response.text)
+    response.close()
+except Exception as e:
+    print("Failed to send POST request:", e)
 
 # listen on port 80
 addr = socket.getaddrinfo('0.0.0.0', 80)[0][-1]
@@ -146,7 +156,10 @@ while True:
                 #print("Command MOVE received")
                 MoveForward(50,1)
                 found=True
-                
+            if str(line).find("/get_right") !=-1:
+                print("Moving right")
+                moveRight(50, 1)
+                found=True   
        
     # we process the response file, We can add placeholders to turn change the page aspect
     response=html # default page, placeholders needs to be replaced before submitting
