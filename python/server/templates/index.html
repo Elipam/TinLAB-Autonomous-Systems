@@ -1,0 +1,72 @@
+<style>
+    #data {
+        height: 300px;  /* Stel de hoogte in op de gewenste waarde */
+        width: 600px;
+        overflow: auto;  /* Voeg een scrollbar toe als de inhoud te groot is */
+        border: 1px solid red;  /* Voeg een rand toe */
+        padding: 10px;  /* Voeg wat ruimte toe tussen de rand en de inhoud */
+    }
+</style>
+
+<h1>AS Dashboard</h1>
+<div id="data"></div>
+<input type="text" id="tarX">
+<input type="text" id="tarY">
+<button id="send_target">Stuur target</button>
+<button id="stop_button" style="background-color: red; color: white; font-size: 20px;">Stop</button>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    var shownLines = 0;  // Aantal reeds getoonde regels
+
+    setInterval(function() {
+        $.ajax({
+            url: 'http://127.0.0.1:5000/get_data',
+            type: 'GET',
+            success: function(data) {
+                // Ga door elke nieuwe regel data
+                for (var i = shownLines; i < data.length; i++) {
+                    // Voeg de regel data toe aan het einde van het div-element
+                    $('#data').append(JSON.stringify(data[i]) + '<br>');
+                }
+                // Update het aantal getoonde regels
+                shownLines = data.length;
+                // Scroll naar de onderkant van het div-element
+                $('#data').scrollTop($('#data')[0].scrollHeight);
+            }
+        });
+    }, 900);  // Update elke seconde
+
+    // Voeg een click event handler toe aan de "Stuur doellocatie" knop
+    $('#send_target').click(function() {
+        var tarX = parseFloat($('#tarX').val());  // Haal de doel X-coördinaat op uit het invoerveld
+        var tarY = parseFloat($('#tarY').val());  // Haal de doel Y-coördinaat op uit het invoerveld
+
+        // Controleer of de waarden van tarX en tarY binnen de toegestane bereiken liggen
+        if (0 <= tarX && tarX <= 1 && 0 >= tarY && tarY >= -1) {
+            $.ajax({
+                url: 'http://127.0.0.1:5000/target',
+                type: 'POST',
+                data: JSON.stringify({tarX: tarX, tarY: tarY}),
+                contentType: 'application/json',
+                success: function(response) {
+                    $('#message').text('Target verzonden.');  // Toon een succesbericht
+                }
+            });
+        } else {
+            $('#message').text('Ongeldige waarden. Zorg ervoor dat 0 <= tarX <= 1 en 0 >= tarY >= -1.');  // Toon een foutbericht
+        }
+    });
+    // Voeg een click event handler toe aan de stopknop
+    $('#stop_button').click(function() {
+        $.ajax({
+            url: 'http://127.0.0.1:5000/stop',
+            type: 'POST',
+            success: function(response) {
+            }
+        });
+    });
+</script>
+
+<!-- Voeg een nieuw HTML-element toe om het bericht te tonen -->
+<p id="message"></p>
