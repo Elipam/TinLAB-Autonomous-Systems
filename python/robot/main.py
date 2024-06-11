@@ -113,7 +113,6 @@ jsonData = {'ip':sta_if.ifconfig()[0]}
 try:
     response = requests.post(SERVER_URL + "/robot_signup", json=jsonData)
     print(response.text)
-    response.close()
 except Exception as e:
     print("Failed to send POST request:", e)
 
