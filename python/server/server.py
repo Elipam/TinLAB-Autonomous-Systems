@@ -13,12 +13,16 @@ import time
 app = Flask(__name__)
 
 ipList = []
+robotDict = {}
 
 @app.route('/send_data', methods=['POST'])
 def receive_data():
     data = request.json
-    # Process received data
-    print("Received Data:", data)
+    print("Received Data:")
+    if (data['robots']):
+        for robot in data['robots']:
+            robotDict[robot['name']] = [robot['current_position'], robot['goal'], robot['direction']]
+    print(robotDict)
     return jsonify({'message': 'Data received successfully'})
 
 @app.route('/robot_signup', methods=['POST'])
@@ -78,7 +82,6 @@ if __name__ == '__main__':
     url = 'http://' + ipList[0] + '/send_data'
     try:
         response = requests.post(url, json=data)
-        print(response.text)
     except Exception as e:
         print("Failed to send POST request:", e)
 
