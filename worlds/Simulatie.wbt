@@ -1,17 +1,16 @@
-#VRML_SIM R2023a utf8
+#VRML_SIM R2023b utf8
 
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/factory/containers/protos/WoodenBox.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/gctronic/e-puck/protos/E-puck.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
 
 WorldInfo {
   basicTimeStep 16
 }
 Viewpoint {
-  orientation -0.2551897026530725 0.2311585701975075 0.9388524543739982 1.732103647525122
-  position 0.24060634836585726 -2.3044202214450435 1.6122476021707928
+  orientation -0.5712415640497255 0.5893777162523448 0.5712416153320709 2.0764527572760034
+  position -1.8287529131125835 -2.284581763826643 4.589657724743963
 }
 TexturedBackground {
   texture "morning_cloudy_empty"
@@ -83,16 +82,13 @@ Solid {
   }
 }
 RectangleArena {
-  floorSize 20 20
-  floorTileSize 3 3
+  floorSize 5 5
+  floorTileSize 1 1
   wallHeight 1.5
 }
-E-puck {
-  translation 0 2.15 0
-  controller "HiddeSkibidi"
-}
 Robot {
-  translation 0 0 0.06
+  translation -2.26 -2.27 0.06
+  rotation 0 0 1 1.5708
   children [
     DistanceSensor {
     }
