@@ -102,7 +102,7 @@ def main():
                 if detected_color != 'None':
                     print(f"Cell ({j}, {i}): {detected_color}")
                     #print(type(j), type(j), type(detected_color))
-                    data["picture"].append({"coordinates": [j, i], "color": detected_color})
+                    data["picture"][f"{j}, {i}"] = detected_color
             
         # Display the modified frames
         cv2.imshow('Color detection', frame)
@@ -116,5 +116,5 @@ def main():
     cv2.destroyAllWindows()
 
 if __name__ == "__main__": 
-    sendData(data, "send_picture")
     main()
+    sendData(data, "send_picture")
