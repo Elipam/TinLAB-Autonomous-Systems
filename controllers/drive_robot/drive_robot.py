@@ -74,7 +74,7 @@ def space_back():
         rightfront_motor.setVelocity(right_speed)
         rightback_motor.setVelocity(right_speed)
         if current_time >= end_time:
-            senddata()
+            break
 
 # Function to turn right by 45 degrees
 def turn_right():
@@ -119,21 +119,16 @@ def space_right():
     turn_right()
     one_space()
     turn_left()
-    senddata()
 
 # function to move one space left
 def space_left():
     turn_left()
     one_space()
     turn_right()
-    senddata()
-    
-def space_up():
-    one_space()
-    senddata()
+
 
 # Get the direction the robot has to go
-def direction(current_pos, next_pos):
+def direction_fun(current_pos, next_pos):
     if next_pos[0] > current_pos[0]:
         return "right"
     elif next_pos[1] < current_pos[1]:
@@ -160,6 +155,7 @@ def senddata():
     senddata = requests.post(server_url + 'send_data', json = jsonfile)
 
 def move_next_space():
+    global CURRENT_POS
      # Get robot data from the server
     response = requests.get(server_url + 'get_data')
     data = response.json()
@@ -171,11 +167,11 @@ def move_next_space():
     # Check if the server knows the current location of the robot
                   if robotReceived['current_position'] == CURRENT_POS:
     # Drive the robot
-                      direction = direction(robotReceived['current_position'], robotReceived['next_position'])
+                      direction = direction_fun(robotReceived['current_position'], robotReceived['next_position'])
                       print(direction)
                       match direction:
                           case "up":
-                              space_up()
+                              one_space()
                           case "down":
                               space_back()
                           case "right":
@@ -183,13 +179,16 @@ def move_next_space():
                           case "left":
                               space_left()
                           case "wait":
+                              continue
+                      CURRENT_POS = robotReceived['next_position']
+                      senddata()
           else:
               print({'message': 'Data received successfully but keys are weird'})
               
 senddata()                 
 # Main loop
 while robot.step(TIME_STEP) != -1:
-    if (robot.step(TIME_STEP)%10):
+    if (robot.getTime()%1 < TIME_STEP/1000.0):
         move_next_space()
 
       
