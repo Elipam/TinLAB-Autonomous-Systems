@@ -18,7 +18,7 @@ class Pathfinding:
         self.height = height
         self.current_grid = self.make_grid()
         self.goal_grid = self.make_grid()
-        self.initialize_grids()
+        #self.initialize_grids()
 
     def heuristic(self, a, b):
         return abs(a[0] - b[0]) + abs(a[1] - b[1])
@@ -86,11 +86,22 @@ class RobotServer:
         def receive_data():
             data = request.json
             print("Received Data:")
-            if (data['robots']):
+            if 'robots' in data:
                 for robot in data['robots']:
-                    self.robot_dict[robot['name']] = [robot['current_position'], robot['goal'], robot['direction']]
+                    if all(key in robot for key in ('name', 'goal', 'current_position', 'direction')):
+                        self.robot_dict[robot['name']] = [robot['current_position'], robot['goal'], robot['direction']]
+                    else:
+                        print({'message': 'Data received successfully'})
+            else:
+                print(F"This is not a robots this is {data}")
             print(self.robot_dict)
             return jsonify({'message': 'Data received successfully'})
+
+        @self.app.route('/send_picture', methods=['POST'])
+        def receive_picture():
+            data = request.json
+            print(data)
+            return jsonify({"message": "received picture"})
 
         @self.app.route('/robot_signup', methods=['POST'])
         def receive_signup():
