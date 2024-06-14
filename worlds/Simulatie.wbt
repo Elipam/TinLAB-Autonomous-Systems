@@ -9,7 +9,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation -0.5705728724325232 0.5544003665667234 0.605876910597179 2.077453578598804
-  position -0.4074463461865009 -1.2822293319960916 9.841926356804489
+  position -2.3235744422998 -1.4808630333892794 5.336382388656183
 }
 TexturedBackground {
   texture "morning_cloudy_empty"
@@ -17,12 +17,12 @@ TexturedBackground {
 TexturedBackgroundLight {
 }
 RectangleArena {
-  floorSize 5 5
+  floorSize 6.5 5
   floorTileSize 1 1
   wallHeight 1.5
 }
 Robot {
-  translation -2.26 -2.27 0.06
+  translation -3 -2.26 0.06
   rotation 0 0 1 1.5708
   children [
     DistanceSensor {
