@@ -8,8 +8,8 @@ WorldInfo {
   basicTimeStep 16
 }
 Viewpoint {
-  orientation -0.5705728724325232 0.5544003665667234 0.605876910597179 2.077453578598804
-  position -2.3235744422998 -1.4808630333892794 5.336382388656183
+  orientation -0.5429286569908214 0.58819803745748 0.5993759606034531 1.9897588803825568
+  position 1.0077645885573594 -1.6630333535771227 4.672043120278819
 }
 TexturedBackground {
   texture "morning_cloudy_empty"
@@ -17,12 +17,13 @@ TexturedBackground {
 TexturedBackgroundLight {
 }
 RectangleArena {
-  floorSize 6.5 5
-  floorTileSize 1 1
+  translation 6 -4.5 0
+  floorSize 13 10
+  floorTileSize 2 2
   wallHeight 1.5
 }
 Robot {
-  translation -3 -2.26 0.06
+  translation 0 0 0.1
   rotation 0 0 1 1.5708
   children [
     DistanceSensor {
@@ -32,13 +33,13 @@ Robot {
         metalness 0
       }
       geometry Box {
-        size 0.2 0.1 0.05
+        size 0.4 0.2 0.1
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
         axis 0 1 0
-        anchor 0.05 0.06 0
+        anchor 0.1 0.12 0
       }
       device [
         RotationalMotor {
@@ -46,8 +47,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.05 0.06 0
-        rotation 1 0 0 1.5707999856068915
+        translation 0.1 0.12 0
+        rotation 1 1.5700895863550976e-16 -1.962611982943872e-17 1.5707999856068906
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -55,8 +56,8 @@ Robot {
               metalness 0
             }
             geometry Cylinder {
-              height 0.02
-              radius 0.05
+              height 0.04
+              radius 0.1
             }
           }
         ]
@@ -71,7 +72,7 @@ Robot {
     HingeJoint {
       jointParameters HingeJointParameters {
         axis 0 1 0
-        anchor 0.05 -0.06 0
+        anchor 0.1 -0.12 0
       }
       device [
         RotationalMotor {
@@ -79,8 +80,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.05000001219645437 -0.05999995888231524 3.64022064517418e-06
-        rotation 1 6.604073036319333e-09 -6.551384359806268e-09 1.5707999857592654
+        translation 0.1 -0.12 3.6402200000020727e-06
+        rotation 1 6.604072742951201e-09 -6.551384422408866e-09 1.5707999857592636
         children [
           USE WHEELSIZE
         ]
@@ -92,7 +93,7 @@ Robot {
     HingeJoint {
       jointParameters HingeJointParameters {
         axis 0 1 0
-        anchor -0.05 -0.06 0
+        anchor -0.1 -0.12 0
       }
       device [
         RotationalMotor {
@@ -100,8 +101,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.05 -0.06 0
-        rotation 1 0 0 1.5707999835202933
+        translation -0.1 -0.12 0
+        rotation 1 -5.495313557976072e-16 -7.850447939965818e-17 1.570799983520293
         children [
           USE WHEELSIZE
         ]
@@ -113,7 +114,7 @@ Robot {
     HingeJoint {
       jointParameters HingeJointParameters {
         axis 0 1 0
-        anchor -0.05 0.06 0
+        anchor -0.1 0.12 0
       }
       device [
         RotationalMotor {
@@ -121,8 +122,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.049999996851340836 0.060000021341082885 4.130467837359915e-06
-        rotation 1 -5.0653910242930504e-09 5.119238130299488e-09 1.5707999882284158
+        translation -0.1 0.12 4.130470000004657e-06
+        rotation 1 -5.0653913403019145e-09 5.119238171005097e-09 1.5707999882284138
         children [
           USE WHEELSIZE
         ]
@@ -133,9 +134,9 @@ Robot {
     }
   ]
   name "Robot3"
-  contactMaterial "white"
   boundingObject USE BODY
   physics Physics {
   }
   controller "drive_robot"
+  customData "White"
 }
