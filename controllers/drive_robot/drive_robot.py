@@ -5,9 +5,9 @@ import requests
 robot = Robot()
 
 # Constants
-TIME_STEP = 64
-MAX_SPEED = 3
-WHEEL_RADIUS = 0.05
+TIME_STEP = 5
+MAX_SPEED = 2
+WHEEL_RADIUS = 0.1
 LENGTH_SIDE = 1.0
 
 # Robot variables
@@ -41,7 +41,7 @@ for motor in motors:
 # Function to move a space forward
 def one_space():
     start_time = robot.getTime()
-    end_time = start_time + 3.5  # Duration to drive forward
+    end_time = start_time + 5.01  # Duration to drive forward
     while robot.step(TIME_STEP) != -1:
         current_time = robot.getTime()
         if current_time < end_time:
@@ -60,7 +60,7 @@ def one_space():
 # function to move a space back
 def space_back():
     start_time = robot.getTime()
-    end_time = start_time + 3.5  # Duration to drive forward
+    end_time = start_time + 5.01  # Duration to drive forward
     while robot.step(TIME_STEP) != -1:
         current_time = robot.getTime()
         if current_time < end_time:
@@ -79,7 +79,7 @@ def space_back():
 # Function to turn right by 45 degrees
 def turn_right():
     start_time = robot.getTime()
-    end_time = start_time + (2 - 0.032) # Duration to turn 45 degrees (calibrate as needed)
+    end_time = start_time + 2.95 # Duration to turn 45 degrees (calibrate as needed)
     while robot.step(TIME_STEP) != -1:
         current_time = robot.getTime()
         if current_time < end_time:
@@ -98,7 +98,7 @@ def turn_right():
 # Function to turn left by 45 degrees
 def turn_left():
     start_time = robot.getTime()
-    end_time = start_time + (2 - 0.032)  # Duration to turn 45 degrees (calibrate as needed)
+    end_time = start_time + 2.95  # Duration to turn 45 degrees (calibrate as needed)
     while robot.step(TIME_STEP) != -1:
         current_time = robot.getTime()
         if current_time < end_time:
@@ -190,7 +190,7 @@ senddata()
 while robot.step(TIME_STEP) != -1:
     if (robot.getTime()%1 < TIME_STEP/1000.0):
         move_next_space()
-    
+   
    
         
     
