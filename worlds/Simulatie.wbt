@@ -2,7 +2,6 @@
 
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/factory/containers/protos/WoodenBox.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
 
 WorldInfo {
@@ -10,76 +9,12 @@ WorldInfo {
 }
 Viewpoint {
   orientation -0.5705728724325232 0.5544003665667234 0.605876910597179 2.077453578598804
-  position -0.4072725654306482 -1.2882617384633113 9.942392193494047
+  position -0.4074463461865009 -1.2822293319960916 9.841926356804489
 }
 TexturedBackground {
   texture "morning_cloudy_empty"
 }
 TexturedBackgroundLight {
-}
-WoodenBox {
-  translation -2.3 0 0.76
-  name "wooden box(1)"
-  size 1.5 1.5 1.5
-}
-Solid {
-  translation 0.88 2.31 0.58
-  children [
-    DEF Balletjeeee Shape {
-      appearance PBRAppearance {
-        baseColorMap ImageTexture {
-          url [
-            "../../../../../../Downloads/jpg_44-2.jpg"
-          ]
-        }
-      }
-      geometry Sphere {
-        radius 0.5
-      }
-    }
-  ]
-  boundingObject DEF balleke Sphere {
-    radius 0.5
-  }
-  physics Physics {
-  }
-}
-Solid {
-  translation 0 1.42 2.46
-  children [
-    USE Balletjeeee
-  ]
-  name "solid(1)"
-  boundingObject USE balleke
-  physics Physics {
-    density -1
-    mass 3
-  }
-}
-Solid {
-  translation -4.71 0 2.77
-  rotation 0 1 0 -1.5707953071795862
-  children [
-    DEF G0 Group {
-      children [
-        Shape {
-          geometry Cylinder {
-            height 0.8
-            radius 0.02
-          }
-        }
-      ]
-    }
-  ]
-  name "solid(2)"
-  boundingObject USE G0
-  physics Physics {
-    density -1
-    mass 2
-    centerOfMass [
-      0 0 0.2
-    ]
-  }
 }
 RectangleArena {
   floorSize 5 5
