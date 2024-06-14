@@ -11,11 +11,11 @@ WHEEL_RADIUS = 0.05
 LENGTH_SIDE = 1.0
 
 # Robot variables
-START_POS_X = 0;
-START_POS_Y = 9;
+START_POS_X = 0
+START_POS_Y = 9
 CURRENT_POS = [START_POS_X, START_POS_Y]
-COLOR = "white";
-NAME = "Robot3";
+COLOR = robot.getCustomData()
+NAME = robot.getName()
 
 # Websockets server URL
 server_url = "http://192.168.0.69:5000/";
@@ -184,13 +184,13 @@ def move_next_space():
                       senddata()
           else:
               print({'message': 'Data received successfully but keys are weird'})
-              
-senddata()                 
+                     
+senddata()       
 # Main loop
 while robot.step(TIME_STEP) != -1:
     if (robot.getTime()%1 < TIME_STEP/1000.0):
         move_next_space()
-
-      
     
+   
+        
     

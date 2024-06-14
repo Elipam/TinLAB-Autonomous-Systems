@@ -29,7 +29,6 @@ Robot {
     }
     DEF BODY Shape {
       appearance PBRAppearance {
-        baseColor 1 0 0
         metalness 0
       }
       geometry Box {
@@ -52,7 +51,7 @@ Robot {
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
-              baseColor 0 1 0
+              baseColor 0 0 0
               metalness 0
             }
             geometry Cylinder {
@@ -133,6 +132,8 @@ Robot {
       }
     }
   ]
+  name "Robot3"
+  contactMaterial "white"
   boundingObject USE BODY
   physics Physics {
   }
