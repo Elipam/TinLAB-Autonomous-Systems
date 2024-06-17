@@ -8,13 +8,25 @@ import requests
 
 picture_json = {
   "picture": {
-    "3, 3": "white",
-    "3, 4": "white",
-    "3, 5": "white",
+    "3, 3": "red",
+    "3, 4": "blue",
+    "3, 5": "yellow",
     "3, 6": "white",
-    "4, 3": "white"
+    "4, 3": "white",
+    "4, 4": "green",
+    "4, 5": "green",
+    "4, 6": "red",
+    "5, 3": "yellow",
+    "5, 4": "white",
+    "5, 5": "red",
+    "5, 6": "blue",
+    "6, 3": "blue",
+    "6, 4": "red",
+    "6, 5": "yellow",
+    "6, 6": "green"
   }
 }
+
 
 robots_json = {
   "robots": [
@@ -22,97 +34,97 @@ robots_json = {
       "name": "Robot1",
       "current_position": [1, 1],
       "color": "white",
-      "direction": 12
+      "angle": 0
     },
     {
       "name": "Robot2",
       "current_position": [0, 0],
       "color": "white",
-      "direction": 12
+      "angle": 0
     },
     {
       "name": "Robot3",
       "current_position": [5, 8],
       "color": "white",
-      "direction": 12
+      "angle": 0
     },
     {
       "name": "Robot4",
       "current_position": [3, 7],
       "color": "red",
-      "direction": 6
+      "angle": 0
     },
     {
       "name": "Robot5",
       "current_position": [8, 2],
       "color": "blue",
-      "direction": 3
+      "angle": 0
     },
     {
       "name": "Robot6",
       "current_position": [6, 9],
       "color": "green",
-      "direction": 9
+      "angle": 0
     },
     {
       "name": "Robot7",
       "current_position": [2, 3],
       "color": "yellow",
-      "direction": 2
+      "angle": 0
     },
     {
       "name": "Robot8",
       "current_position": [9, 1],
       "color": "purple",
-      "direction": 4
+      "angle": 0
     },
     {
       "name": "Robot9",
       "current_position": [4, 4],
       "color": "orange",
-      "direction": 7
+      "angle": 0
     },
     {
       "name": "Robot10",
       "current_position": [7, 5],
       "color": "pink",
-      "direction": 1
+      "angle": 0
     },
     {
       "name": "Robot11",
       "current_position": [0, 6],
       "color": "gray",
-      "direction": 5
+      "angle": 0
     },
     {
       "name": "Robot12",
       "current_position": [5, 5],
       "color": "black",
-      "direction": 8
+      "angle": 0
     },
     {
       "name": "Robot13",
       "current_position": [9, 9],
       "color": "brown",
-      "direction": 11
+      "angle": 0
     },
     {
       "name": "Robot14",
       "current_position": [2, 8],
       "color": "cyan",
-      "direction": 10
+      "angle": 0
     },
     {
       "name": "Robot15",
       "current_position": [8, 3],
       "color": "magenta",
-      "direction": 0
+      "angle": 0
     },
     {
       "name": "Robot16",
       "current_position": [1, 9],
       "color": "lime",
-      "direction": 13
+      "angle": 0
     }
   ]
 }

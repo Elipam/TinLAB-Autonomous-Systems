@@ -11,7 +11,7 @@ import requests
 import time
 
 class Pathfinding:
-    def __init__(self, width=10, height=10):
+    def __init__(self, width=13, height=10):
         self.robots = {}
         self.robots_move = {}
         self.picture = {}
@@ -86,23 +86,24 @@ class Pathfinding:
         print(self.robots)
         for key, value in self.robots.items():
             pos, goal, color, direction = value
-            row, col = pos
+            x, y = pos
             min_heuristic = float('inf')
             best_move = None
             for move in self.possible_moves:
-                next_row, next_col = row + move[0], col + move[1]
-                if not (0 <= next_row < len(next_grid) and 0 <= next_col < len(next_grid[0])):
+                next_x, next_y = x + move[0], y + move[1]
+                if not (0 <= next_y < len(next_grid) and 0 <= next_x < len(next_grid[0])):
                     continue
-                if next_grid[next_col][next_row] != 0:
+                if next_grid[next_y][next_x] != 0:
                     continue
-                h = self.heuristic((next_row, next_col), goal)
+                h = self.heuristic((next_x, next_y), goal)
                 if h < min_heuristic:
                     min_heuristic = h
                     best_move = move
             if best_move:
-                next_row, next_col = row + best_move[0], col + best_move[1]
-                next_grid[next_col][next_row] = key
-                self.robots_move['robots'].append({"name":key, "current_position":[row, col], "next_position":[next_row, next_col]}) 
+                next_x, next_y = x + best_move[0], y + best_move[1]
+                next_grid[next_y][next_x] = key
+                self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[next_x, next_y]}) 
+        print(self.robots_move['robots'])
         return self.robots_move
 
 class RobotServer:
@@ -119,14 +120,15 @@ class RobotServer:
             print("Received Data:")
             if 'robots' in data:
                 for robot in data['robots']:
-                    if all(key in robot for key in ('name', 'color', 'current_position', 'direction')):
-                        self.board.robots[robot['name']] = [robot['current_position'], [6, 3], robot['color'], robot['direction']]
+                    if all(key in robot for key in ('name', 'color', 'current_position', 'angle')):
+                        self.board.robots[robot['name']] = [robot['current_position'], [12, 0], robot['color'], robot['angle']]
                     else:
                         print({'message': 'Data received successfully but keys are weird'})
+                        print(data)
             else:
                 print(F"This is not a robots this is {data}")
                 return jsonify({'message': 'Data received but not processed'})
-            print(self.board.robots)
+            print(f"received {data} own {self.board.robots}")
             return jsonify({'message': 'Data received successfully'})
 
         @self.app.route('/get_data', methods=['GET'])
