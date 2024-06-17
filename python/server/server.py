@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu May 30 13:38:09 2024
-
-@author: spanj
-"""
-
 from flask import Flask, request, jsonify, render_template
 import threading
 import requests
@@ -20,7 +13,6 @@ class Pathfinding:
         self.height = height
         self.current_grid = self.make_grid()
         self.goal_grid = self.make_grid()
-        #self.initialize_grids()
 
     def heuristic(self, a, b):
         return abs(a[0] - b[0]) + abs(a[1] - b[1])
@@ -31,59 +23,21 @@ class Pathfinding:
     def print_grid(self, grid=None):
         if grid is None:
             grid = self.current_grid
-        print(F"+{len(grid[0])*'-'*2+'-'}+")
+        print(f"+{len(grid[0])*'-'*2+'-'}+")
         for row in grid:
             print('|', end='')
             for element in row:
-                print(F" {element}", end='')
+                print(f" {element}", end='')
             print(' |')
-        print(F"+{len(grid[0])*'-'*2+'-'}+")
-
-    def initialize_grids(self):
-        for key, value in self.current_positions.items():
-            row, col = value
-            self.current_grid[col][row] = key
-        for key, value in self.goal_positions.items():
-            row, col = value
-            self.goal_grid[col][row] = key
+        print(f"+{len(grid[0])*'-'*2+'-'}+")
 
     def determine_goals(self):
         print(self.robots)
         print(self.picture)
 
-    def algorithm(self):
-        next_grid = self.make_grid()
-        for key, value in self.current_positions.items():
-            row, col = value
-            if value == self.goal_positions[key]:
-                next_grid[col][row] = key
-                continue
-            min_heuristic = float('inf')
-            best_move = None
-            for move in self.possible_moves:
-                next_row, next_col = row + move[0], col + move[1]
-                if not (0 <= next_row < len(next_grid) and 0 <= next_col < len(next_grid[0])):
-                    continue
-                if next_grid[next_col][next_row] != 0:
-                    continue
-                h = self.heuristic((next_row, next_col), self.goal_positions[key])
-                if h < min_heuristic:
-                    min_heuristic = h
-                    best_move = move
-            if best_move:
-                next_row, next_col = row + best_move[0], col + best_move[1]
-                next_grid[next_col][next_row] = key
-                self.current_positions[key] = (next_row, next_col)
-
-        self.print_grid(next_grid)
-        if next_grid == self.goal_grid:
-            return
-        self.algorithm()
-    
     def quick_move(self):
         self.robots_move = {'robots':[]}
         next_grid = self.make_grid()
-        print(self.robots)
         for key, value in self.robots.items():
             pos, goal, color, direction = value
             row, col = pos
@@ -102,7 +56,7 @@ class Pathfinding:
             if best_move:
                 next_row, next_col = row + best_move[0], col + best_move[1]
                 next_grid[next_col][next_row] = key
-                self.robots_move['robots'].append({"name":key, "current_position":[row, col], "next_position":[next_row, next_col]}) 
+                self.robots_move['robots'].append({"name": key, "current_position": [row, col], "next_position": [next_row, next_col]}) 
         return self.robots_move
 
 class RobotServer:
@@ -110,13 +64,36 @@ class RobotServer:
         self.app = Flask(__name__)
         self.ip_list = []
         self.board = pathfinding_instance
+        self.last_command = None  # Variabele voor de laatste opdracht
         self.setup_routes()
+
+        # Start een aparte thread voor periodiek printen van last_command
+        self.start_print_last_command_thread()
+
+    def start_print_last_command_thread(self):
+        def print_last_command():
+            while True:
+                print(f"Last Command: {self.last_command}")
+                time.sleep(1)  # Wacht 1 seconde voordat de volgende print wordt uitgevoerd
+
+        # Maak een nieuwe thread voor de print_last_command functie
+        self.print_last_command_thread = threading.Thread(target=print_last_command)
+        self.print_last_command_thread.daemon = True  # Stel in als daemon thread
+        self.print_last_command_thread.start()  # Start de thread
+
+    def send_command_to_pico(self, command_data):
+        try:
+            pico_url = 'http://192.168.0.25:5000/get_data_for_microcontroller'
+            response = requests.post(pico_url, json=command_data)
+            print(f"Response from Pico: {response.status_code} - {response.text}")
+        except Exception as e:
+            print(f"Failed to send command to Pico: {e}")
 
     def setup_routes(self):
         @self.app.route('/send_data', methods=['POST'])
         def receive_data():
             data = request.json
-            print("Received Data:")
+            print("Received Data:", data)
             if 'robots' in data:
                 for robot in data['robots']:
                     if all(key in robot for key in ('name', 'color', 'current_position', 'direction')):
@@ -124,7 +101,7 @@ class RobotServer:
                     else:
                         print({'message': 'Data received successfully but keys are weird'})
             else:
-                print(F"This is not a robots this is {data}")
+                print(f"This is not a robots this is {data}")
                 return jsonify({'message': 'Data received but not processed'})
             print(self.board.robots)
             return jsonify({'message': 'Data received successfully'})
@@ -134,7 +111,7 @@ class RobotServer:
             client_ip = request.remote_addr
             print(f"Next step requested from IP: {client_ip}")
             data = self.board.quick_move()
-            print(F"Sending to simulation {data}")
+            print(f"Sending to simulation {data}")
             return jsonify(data)
 
         @self.app.route('/send_picture', methods=['POST'])
@@ -156,7 +133,33 @@ class RobotServer:
 
         @self.app.route('/robot_step', methods=['GET'])
         def send_right():
-            return 200
+            return 'OK', 200
+            
+        @app.route('/button_pressed', methods=['POST'])
+        def button_pressed():
+            global last_command
+            command = request.form['command']
+            
+            if command == 'MOVE_FORWARD':
+                last_command = 'MOVE_FORWARD'
+            elif command == 'MOVE_BACKWARD':
+                last_command = 'MOVE_BACKWARD'
+            elif command == 'MOVE_LEFT':
+                last_command = 'MOVE_LEFT'
+            elif command == 'MOVE_RIGHT':
+                last_command = 'MOVE_RIGHT'
+            else:
+                return jsonify({'error': 'Invalid command'}), 400
+            
+            return jsonify({'message': f'Command {command} received successfully'})
+
+        @app.route('/get_last_command', methods=['GET'])
+        def get_last_command():
+            global last_command
+            if last_command:
+                return jsonify({'command': last_command})
+            else:
+                return jsonify({'error': 'No command received yet'})
 
         @self.app.route('/')
         def home():
@@ -169,17 +172,17 @@ if __name__ == '__main__':
     grid = Pathfinding()
     server = RobotServer(grid)
 
-    # Start Flask app in a separate thread
+    # Start Flask app in een aparte thread
     flask_thread = threading.Thread(target=server.run_flask_app)
     flask_thread.daemon = True
     flask_thread.start()
     time.sleep(2)
 
-    # Temp, only here to wait before testing 
+    # Temp, alleen om te wachten voor testen
     while not server.ip_list:
         time.sleep(1)
 
-    # Now you can send a request using the requests library
+    # Nu kun je een verzoek sturen met behulp van de requests library
     data = {
         "robots": [
             {
@@ -191,7 +194,7 @@ if __name__ == '__main__':
             {
                 "name": "Robot2",
                 "current_position": [0, 0],
-                "goal": [5, 6],
+                               "goal": [5, 6],
                 "direction": 12
             },
             {
@@ -202,8 +205,8 @@ if __name__ == '__main__':
             }
         ]
     }
-    server.ip_list[0] = "127.0.0.1" + ":5000"
-    url = 'http://' + server.ip_list[0] + '/send_data'
+    server.ip_list.append("192.168.0.25:5000") 
+    url = f'http://{server.ip_list[0]}/send_data'
     try:
         response = requests.post(url, json=data)
     except Exception as e:
@@ -212,7 +215,6 @@ if __name__ == '__main__':
     print(response.json())
 
     grid.print_grid()
-    # Keep the main thread alive if necessary
+    # Houd de hoofdthread actief indien nodig
     while True:
         time.sleep(1)
-
