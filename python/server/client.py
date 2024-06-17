@@ -136,5 +136,5 @@ print(response.json())
 response = requests.post(url + 'send_picture', json=picture_json)
 print(response.json())
 
-response = requests.get(url + 'get_data')
+response = requests.get(url + 'get_state')
 print(response.json())

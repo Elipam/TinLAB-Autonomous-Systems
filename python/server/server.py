@@ -112,6 +112,7 @@ class RobotServer:
         self.ip_list = []
         self.board = pathfinding_instance
         self.setup_routes()
+        self.state = "initial_state"
 
     def setup_routes(self):
         @self.app.route('/send_data', methods=['POST'])
@@ -161,8 +162,12 @@ class RobotServer:
             return 200
 
         @self.app.route('/')
-        def home():
-            return render_template('index.html')
+        def index():
+            return render_template('index.html', state=self.state)
+
+        @self.app.route('/get_state', methods=['GET'])
+        def get_state():
+            return jsonify({'state': self.state})
 
     def run_flask_app(self):
         self.app.run(host='0.0.0.0', port=5000)
