@@ -15,7 +15,6 @@ CLIENT = InferenceHTTPClient(
     api_key=API_KEY
 )
 
-picture_data = {"picture": {}}
 robot_data = {"robots": []}
 
 # Define the number of grid cells
@@ -153,15 +152,18 @@ def run_inference(frame):
             "name": f"Robot{robot_count}",
             "current_position": [grid_x, grid_y],
             "color": "blue",
-            "angle": [angle]
+            "angle": angle
         }
-
+        
+        # Check if the robot's position already exists in the list of robots
         if any(robot['current_position'] == robot_info['current_position'] for robot in robot_data['robots']):
+            # If the robot's position already exists, update the angle and continue to the next robot
             for robot in robot_data['robots']:
                 if robot['current_position'] == robot_info['current_position']:
-                    robot['angle'] = [angle]
+                    robot['angle'] = angle
                     break
         else:
+            # If the robot's position doesn't exist, add the new robot to the list
             robot_data["robots"].append(robot_info)
 
     return robot_data
@@ -179,7 +181,7 @@ def main():
         print("\n ----------- \nRobot info:")
         print(robot_data)
 
-        # Send the robot_data to the server with a 1-second delay
+        # Send the robot_data to the server
         sendData(robot_data, "send_data")
         time.sleep(1)  # Delay for 1 second
 
