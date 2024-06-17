@@ -9,7 +9,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation -0.5618573128235274 0.5675042815835526 0.601876441149727 2.0491440992843777
-  position 4.344152786953248 -5.146944879883029 21.986383017357323
+  position 5.900006577684152 -7.507265460054869 21.666946912327898
 }
 TexturedBackground {
   texture "morning_cloudy_empty"
@@ -23,7 +23,7 @@ RectangleArena {
   wallHeight 1.5
 }
 Robot {
-  translation 0 0 0.1
+  translation 3.31323e-05 -9.02 0.1
   rotation 0 0 1 1.5708
   children [
     DistanceSensor {
@@ -138,5 +138,5 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "White"
+  customData "[White, 0 , 9]"
 }
