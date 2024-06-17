@@ -8,8 +8,8 @@ WorldInfo {
   basicTimeStep 16
 }
 Viewpoint {
-  orientation -0.5618573128235274 0.5675042815835526 0.601876441149727 2.0491440992843777
-  position 5.900006577684152 -7.507265460054869 21.666946912327898
+  orientation 0.5370398778003016 -0.5339310300397386 -0.6530741342397055 4.25662746596219
+  position 6.951122997947825 -9.644920785202986 20.662687824269373
 }
 TexturedBackground {
   texture "morning_cloudy_empty"
@@ -23,13 +23,14 @@ RectangleArena {
   wallHeight 1.5
 }
 Robot {
-  translation 3.31323e-05 -9.02 0.1
-  rotation 0 0 1 1.5708
+  translation 12.01 -9.02 0.098806
+  rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
   children [
     DistanceSensor {
     }
     DEF BODY Shape {
       appearance PBRAppearance {
+        baseColor 0.666667 0 0
         metalness 0
       }
       geometry Box {
@@ -38,6 +39,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
+        position -3.758758255755347e-07
         axis 0 1 0
         anchor 0.1 0.12 0
       }
@@ -48,7 +50,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 1 1.5700895863550976e-16 -1.962611982943872e-17 1.5707999856068906
+        rotation 0.9999999999999647 -1.879007483306809e-07 1.8790143596283344e-07 1.5707999856069248
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -71,6 +73,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
+        position -6.684814028052229e-07
         axis 0 1 0
         anchor 0.1 -0.12 0
       }
@@ -80,8 +83,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.1 -0.12 3.6402200000020727e-06
-        rotation 1 6.604072742951201e-09 -6.551384422408866e-09 1.5707999857592636
+        translation 0.09999999999756642 -0.12 3.640220000001265e-06
+        rotation 0.9999999999998924 -3.2765733789223834e-07 3.277112492656089e-07 1.5707999857593695
         children [
           USE WHEELSIZE
         ]
@@ -92,6 +95,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
+        position -6.702059438080107e-07
         axis 0 1 0
         anchor -0.1 -0.12 0
       }
@@ -102,7 +106,7 @@ Robot {
       ]
       endPoint Solid {
         translation -0.1 -0.12 0
-        rotation 1 -5.495313557976072e-16 -7.850447939965818e-17 1.570799983520293
+        rotation 0.9999999999998875 -3.3506529844963604e-07 3.350665230656247e-07 1.5707999835204052
         children [
           USE WHEELSIZE
         ]
@@ -113,6 +117,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
+        position -3.7415394788342553e-07
         axis 0 1 0
         anchor -0.1 0.12 0
       }
@@ -122,8 +127,622 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1 0.12 4.130470000004657e-06
-        rotation 1 -5.0653913403019145e-09 5.119238171005097e-09 1.5707999882284138
+        translation -0.1000000000015456 0.12 4.130470000004365e-06
+        rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+  ]
+  name "Robot15"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "drive_robot"
+  customData "Green,12,9"
+}
+Robot {
+  translation 0.01 -7.97 0.088801
+  rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
+  children [
+    DistanceSensor {
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 0.666667 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.2 0.1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.758758255755347e-07
+        axis 0 1 0
+        anchor 0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1 0.12 0
+        rotation 0.9999999999999647 -1.879007483306809e-07 1.8790143596283344e-07 1.5707999856069248
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.1
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.684814028052229e-07
+        axis 0 1 0
+        anchor 0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.09999999999756642 -0.12 3.640220000001265e-06
+        rotation 0.9999999999998924 -3.2765733789223834e-07 3.277112492656089e-07 1.5707999857593695
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.702059438080107e-07
+        axis 0 1 0
+        anchor -0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1 -0.12 0
+        rotation 0.9999999999998875 -3.3506529844963604e-07 3.350665230656247e-07 1.5707999835204052
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.7415394788342553e-07
+        axis 0 1 0
+        anchor -0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1000000000015456 0.12 4.130470000004365e-06
+        rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+  ]
+  name "Robot16"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "drive_robot"
+  customData "Green,0,8"
+}
+Robot {
+  translation 1.03 -7.97 0.098801
+  rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
+  children [
+    DistanceSensor {
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 0.666667 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.2 0.1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.758758255755347e-07
+        axis 0 1 0
+        anchor 0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1 0.12 0
+        rotation 0.9999999999999647 -1.879007483306809e-07 1.8790143596283344e-07 1.5707999856069248
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.1
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.684814028052229e-07
+        axis 0 1 0
+        anchor 0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.09999999999756642 -0.12 3.640220000001265e-06
+        rotation 0.9999999999998924 -3.2765733789223834e-07 3.277112492656089e-07 1.5707999857593695
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.702059438080107e-07
+        axis 0 1 0
+        anchor -0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1 -0.12 0
+        rotation 0.9999999999998875 -3.3506529844963604e-07 3.350665230656247e-07 1.5707999835204052
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.7415394788342553e-07
+        axis 0 1 0
+        anchor -0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1000000000015456 0.12 4.130470000004365e-06
+        rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+  ]
+  name "Robot17"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "drive_robot"
+  customData "Green,1,8"
+}
+Robot {
+  translation 2.05 -7.97 0.108801
+  rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
+  children [
+    DistanceSensor {
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 0.666667 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.2 0.1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.758758255755347e-07
+        axis 0 1 0
+        anchor 0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1 0.12 0
+        rotation 0.9999999999999647 -1.879007483306809e-07 1.8790143596283344e-07 1.5707999856069248
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.1
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.684814028052229e-07
+        axis 0 1 0
+        anchor 0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.09999999999756642 -0.12 3.640220000001265e-06
+        rotation 0.9999999999998924 -3.2765733789223834e-07 3.277112492656089e-07 1.5707999857593695
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.702059438080107e-07
+        axis 0 1 0
+        anchor -0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1 -0.12 0
+        rotation 0.9999999999998875 -3.3506529844963604e-07 3.350665230656247e-07 1.5707999835204052
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.7415394788342553e-07
+        axis 0 1 0
+        anchor -0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1000000000015456 0.12 4.130470000004365e-06
+        rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+  ]
+  name "Robot18"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "drive_robot"
+  customData "Green,2,8"
+}
+Robot {
+  translation 2.940030000282603 -9.020000000000035 0.09880516132716563
+  rotation 7.628491826564971e-08 -1.149339611637448e-06 0.9999999999993368 1.5708000000005347
+  children [
+    DistanceSensor {
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 1 1 0.498039
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.2 0.1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 2.917926097885631e-11
+        axis 0 1 0
+        anchor 0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1 0.12 0
+        rotation 1 6.565636961109669e-11 -6.565647245243551e-11 1.5707999856068906
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.1
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -9.724587776652118e-15
+        axis 0 1 0
+        anchor 0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.09999999999999984 -0.12 3.6402200000020727e-06
+        rotation 1 6.582135305717104e-09 -6.529446904906319e-09 1.5707999857592636
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 2.9156745642340747e-11
+        axis 0 1 0
+        anchor -0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1 -0.12 0
+        rotation 1 6.560526757101665e-11 -6.560613550974803e-11 1.570799983520293
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1.2293132562136235e-14
+        axis 0 1 0
+        anchor -0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.10000000000000017 0.12 4.130470000004657e-06
+        rotation 1 -5.087355326746752e-09 5.141202237869757e-09 1.5707999882284138
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+  ]
+  name "Robot6"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "drive_robot"
+  customData "Yellow,3,9"
+}
+Robot {
+  translation 3.34779e-05 -9.02 0.0988052
+  rotation 7.628476053430804e-08 -1.149339785963148e-06 0.9999999999993366 1.5707997131026343
+  children [
+    DistanceSensor {
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.2 0.1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 3.8298616043356944e-08
+        axis 0 1 0
+        anchor 0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1 0.12 0
+        rotation 0.9999999999999996 1.9149238115097733e-08 -1.9149308041304586e-08 1.5707999856068906
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.1
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.176474550059538e-08
+        axis 0 1 0
+        anchor 0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.09999999999988438 -0.12 3.6402200000020714e-06
+        rotation 1 -9.27824189441685e-09 9.330988327888827e-09 1.5707999857592636
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 2.9143387833612897e-08
+        axis 0 1 0
+        anchor -0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1 -0.12 0
+        rotation 0.9999999999999997 1.4571640082689296e-08 -1.4571693995310926e-08 1.5707999835202937
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.566959438927597e-08
+        axis 0 1 0
+        anchor -0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.10000000000014733 0.12 4.130470000004657e-06
+        rotation 0.9999999999999996 -2.290012323413523e-08 2.2954035365643086e-08 1.5707999882284138
         children [
           USE WHEELSIZE
         ]
@@ -138,5 +757,1233 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "[White, 0 , 9]"
+  customData "White,0,9"
+}
+Robot {
+  translation 1.00003 -9.02 0.0988052
+  rotation 7.628491710494937e-08 -1.1493396128274498e-06 0.9999999999993368 1.5708000000005298
+  children [
+    DistanceSensor {
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.2 0.1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 1.4596357779530014e-11
+        axis 0 1 0
+        anchor 0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1 0.12 0
+        rotation 1 2.189461357040684e-11 -2.1894556295414855e-11 1.5707999856068906
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.1
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1.461586407458526e-11
+        axis 0 1 0
+        anchor 0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.09999999999999984 -0.12 3.6402200000020727e-06
+        rotation 1 6.582149027057564e-09 -6.529460626296985e-09 1.5707999857592636
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 1.4584619329972877e-11
+        axis 0 1 0
+        anchor -0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1 -0.12 0
+        rotation 1 2.1876299465827927e-11 -2.1877007499438717e-11 1.570799983520293
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1.4630963107720163e-11
+        axis 0 1 0
+        anchor -0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.10000000000000017 0.12 4.130470000004657e-06
+        rotation 1 -5.087337704608193e-09 5.141184615666677e-09 1.5707999882284138
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+  ]
+  name "Robot4"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "drive_robot"
+  customData "White,1,9"
+}
+Robot {
+  translation 2.0500292111085137 -9.020000000036767 0.09880516132716566
+  rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
+  children [
+    DistanceSensor {
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.2 0.1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.758758255755347e-07
+        axis 0 1 0
+        anchor 0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1 0.12 0
+        rotation 0.9999999999999647 -1.879007483306809e-07 1.8790143596283344e-07 1.5707999856069248
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.1
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.684814028052229e-07
+        axis 0 1 0
+        anchor 0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.09999999999756642 -0.12 3.640220000001265e-06
+        rotation 0.9999999999998924 -3.2765733789223834e-07 3.277112492656089e-07 1.5707999857593695
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.702059438080107e-07
+        axis 0 1 0
+        anchor -0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1 -0.12 0
+        rotation 0.9999999999998875 -3.3506529844963604e-07 3.350665230656247e-07 1.5707999835204052
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.7415394788342553e-07
+        axis 0 1 0
+        anchor -0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1000000000015456 0.12 4.130470000004365e-06
+        rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+  ]
+  name "Robot5"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "drive_robot"
+  customData "White,2,9"
+}
+Robot {
+  translation 3.96003 -9.02 0.098805
+  rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
+  children [
+    DistanceSensor {
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 1 1 0.498039
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.2 0.1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.758758255755347e-07
+        axis 0 1 0
+        anchor 0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1 0.12 0
+        rotation 0.9999999999999647 -1.879007483306809e-07 1.8790143596283344e-07 1.5707999856069248
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.1
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.684814028052229e-07
+        axis 0 1 0
+        anchor 0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.09999999999756642 -0.12 3.640220000001265e-06
+        rotation 0.9999999999998924 -3.2765733789223834e-07 3.277112492656089e-07 1.5707999857593695
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.702059438080107e-07
+        axis 0 1 0
+        anchor -0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1 -0.12 0
+        rotation 0.9999999999998875 -3.3506529844963604e-07 3.350665230656247e-07 1.5707999835204052
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.7415394788342553e-07
+        axis 0 1 0
+        anchor -0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1000000000015456 0.12 4.130470000004365e-06
+        rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+  ]
+  name "Robot7"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "drive_robot"
+  customData "Yellow,4,9"
+}
+Robot {
+  translation 4.99003 -9.02 0.108805
+  rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
+  children [
+    DistanceSensor {
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 1 1 0.498039
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.2 0.1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.758758255755347e-07
+        axis 0 1 0
+        anchor 0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1 0.12 0
+        rotation 0.9999999999999647 -1.879007483306809e-07 1.8790143596283344e-07 1.5707999856069248
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.1
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.684814028052229e-07
+        axis 0 1 0
+        anchor 0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.09999999999756642 -0.12 3.640220000001265e-06
+        rotation 0.9999999999998924 -3.2765733789223834e-07 3.277112492656089e-07 1.5707999857593695
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.702059438080107e-07
+        axis 0 1 0
+        anchor -0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1 -0.12 0
+        rotation 0.9999999999998875 -3.3506529844963604e-07 3.350665230656247e-07 1.5707999835204052
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.7415394788342553e-07
+        axis 0 1 0
+        anchor -0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1000000000015456 0.12 4.130470000004365e-06
+        rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+  ]
+  name "Robot8"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "drive_robot"
+  customData "Yellow,5,9"
+}
+Robot {
+  translation 5.98003 -9.02 0.108806
+  rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
+  children [
+    DistanceSensor {
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 0 0.333333 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.2 0.1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.758758255755347e-07
+        axis 0 1 0
+        anchor 0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1 0.12 0
+        rotation 0.9999999999999647 -1.879007483306809e-07 1.8790143596283344e-07 1.5707999856069248
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.1
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.684814028052229e-07
+        axis 0 1 0
+        anchor 0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.09999999999756642 -0.12 3.640220000001265e-06
+        rotation 0.9999999999998924 -3.2765733789223834e-07 3.277112492656089e-07 1.5707999857593695
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.702059438080107e-07
+        axis 0 1 0
+        anchor -0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1 -0.12 0
+        rotation 0.9999999999998875 -3.3506529844963604e-07 3.350665230656247e-07 1.5707999835204052
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.7415394788342553e-07
+        axis 0 1 0
+        anchor -0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1000000000015456 0.12 4.130470000004365e-06
+        rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+  ]
+  name "Robot9"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "drive_robot"
+  customData "Blue,6,9"
+}
+Robot {
+  translation 7.07003 -9.02 0.098806
+  rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
+  children [
+    DistanceSensor {
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 0 0.333333 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.2 0.1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.758758255755347e-07
+        axis 0 1 0
+        anchor 0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1 0.12 0
+        rotation 0.9999999999999647 -1.879007483306809e-07 1.8790143596283344e-07 1.5707999856069248
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.1
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.684814028052229e-07
+        axis 0 1 0
+        anchor 0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.09999999999756642 -0.12 3.640220000001265e-06
+        rotation 0.9999999999998924 -3.2765733789223834e-07 3.277112492656089e-07 1.5707999857593695
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.702059438080107e-07
+        axis 0 1 0
+        anchor -0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1 -0.12 0
+        rotation 0.9999999999998875 -3.3506529844963604e-07 3.350665230656247e-07 1.5707999835204052
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.7415394788342553e-07
+        axis 0 1 0
+        anchor -0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1000000000015456 0.12 4.130470000004365e-06
+        rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+  ]
+  name "Robot10"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "drive_robot"
+  customData "Blue,7,9"
+}
+Robot {
+  translation 7.96003 -9.02 0.098806
+  rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
+  children [
+    DistanceSensor {
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 0 0.333333 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.2 0.1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.758758255755347e-07
+        axis 0 1 0
+        anchor 0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1 0.12 0
+        rotation 0.9999999999999647 -1.879007483306809e-07 1.8790143596283344e-07 1.5707999856069248
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.1
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.684814028052229e-07
+        axis 0 1 0
+        anchor 0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.09999999999756642 -0.12 3.640220000001265e-06
+        rotation 0.9999999999998924 -3.2765733789223834e-07 3.277112492656089e-07 1.5707999857593695
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.702059438080107e-07
+        axis 0 1 0
+        anchor -0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1 -0.12 0
+        rotation 0.9999999999998875 -3.3506529844963604e-07 3.350665230656247e-07 1.5707999835204052
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.7415394788342553e-07
+        axis 0 1 0
+        anchor -0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1000000000015456 0.12 4.130470000004365e-06
+        rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+  ]
+  name "Robot11"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "drive_robot"
+  customData "Blue,8,9"
+}
+Robot {
+  translation 8.96003 -9.02 0.098806
+  rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
+  children [
+    DistanceSensor {
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 0 0.666667 0
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.2 0.1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.758758255755347e-07
+        axis 0 1 0
+        anchor 0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1 0.12 0
+        rotation 0.9999999999999647 -1.879007483306809e-07 1.8790143596283344e-07 1.5707999856069248
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.1
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.684814028052229e-07
+        axis 0 1 0
+        anchor 0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.09999999999756642 -0.12 3.640220000001265e-06
+        rotation 0.9999999999998924 -3.2765733789223834e-07 3.277112492656089e-07 1.5707999857593695
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.702059438080107e-07
+        axis 0 1 0
+        anchor -0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1 -0.12 0
+        rotation 0.9999999999998875 -3.3506529844963604e-07 3.350665230656247e-07 1.5707999835204052
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.7415394788342553e-07
+        axis 0 1 0
+        anchor -0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1000000000015456 0.12 4.130470000004365e-06
+        rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+  ]
+  name "Robot12"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "drive_robot"
+  customData "Green,9,9"
+}
+Robot {
+  translation 9.99 -9.02 0.088806
+  rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
+  children [
+    DistanceSensor {
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 0 0.666667 0
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.2 0.1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.758758255755347e-07
+        axis 0 1 0
+        anchor 0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1 0.12 0
+        rotation 0.9999999999999647 -1.879007483306809e-07 1.8790143596283344e-07 1.5707999856069248
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.1
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.684814028052229e-07
+        axis 0 1 0
+        anchor 0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.09999999999756642 -0.12 3.640220000001265e-06
+        rotation 0.9999999999998924 -3.2765733789223834e-07 3.277112492656089e-07 1.5707999857593695
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.702059438080107e-07
+        axis 0 1 0
+        anchor -0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1 -0.12 0
+        rotation 0.9999999999998875 -3.3506529844963604e-07 3.350665230656247e-07 1.5707999835204052
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.7415394788342553e-07
+        axis 0 1 0
+        anchor -0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1000000000015456 0.12 4.130470000004365e-06
+        rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+  ]
+  name "Robot13"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "drive_robot"
+  customData "Green,10,9"
+}
+Robot {
+  translation 10.94 -9.02 0.088806
+  rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
+  children [
+    DistanceSensor {
+    }
+    DEF BODY Shape {
+      appearance PBRAppearance {
+        baseColor 0 0.666667 0
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.2 0.1
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.758758255755347e-07
+        axis 0 1 0
+        anchor 0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel1"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1 0.12 0
+        rotation 0.9999999999999647 -1.879007483306809e-07 1.8790143596283344e-07 1.5707999856069248
+        children [
+          DEF WHEELSIZE Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.1
+            }
+          }
+        ]
+        name "Wheel1"
+        boundingObject USE WHEELSIZE
+        physics DEF WheelPhysics Physics {
+          density -1
+          mass 1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.684814028052229e-07
+        axis 0 1 0
+        anchor 0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.09999999999756642 -0.12 3.640220000001265e-06
+        rotation 0.9999999999998924 -3.2765733789223834e-07 3.277112492656089e-07 1.5707999857593695
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel2"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -6.702059438080107e-07
+        axis 0 1 0
+        anchor -0.1 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel3"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1 -0.12 0
+        rotation 0.9999999999998875 -3.3506529844963604e-07 3.350665230656247e-07 1.5707999835204052
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel3"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.7415394788342553e-07
+        axis 0 1 0
+        anchor -0.1 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "Wheel4"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1000000000015456 0.12 4.130470000004365e-06
+        rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
+        children [
+          USE WHEELSIZE
+        ]
+        name "Wheel4"
+        boundingObject USE WHEELSIZE
+        physics USE WheelPhysics
+      }
+    }
+  ]
+  name "Robot14"
+  boundingObject USE BODY
+  physics Physics {
+  }
+  controller "drive_robot"
+  customData "Green,11,9"
 }

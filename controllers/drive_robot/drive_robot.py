@@ -12,8 +12,8 @@ LENGTH_SIDE = 1.0
 
 # Robot variables
 data = robot.getCustomData().split(",")
-START_POS_X = data[1]
-START_POS_Y = data[2]
+START_POS_X = int(data[1])
+START_POS_Y = int(data[2])
 CURRENT_POS = [START_POS_X, START_POS_Y]
 COLOR = data[0]
 NAME = robot.getName()
