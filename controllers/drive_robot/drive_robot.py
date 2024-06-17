@@ -11,10 +11,11 @@ WHEEL_RADIUS = 0.1
 LENGTH_SIDE = 1.0
 
 # Robot variables
-START_POS_X = 0
-START_POS_Y = 0
+data = robot.getCustomData().split(",")
+START_POS_X = data[1]
+START_POS_Y = data[2]
 CURRENT_POS = [START_POS_X, START_POS_Y]
-COLOR = robot.getCustomData()
+COLOR = data[0]
 NAME = robot.getName()
 
 # Websockets server URL
