@@ -46,7 +46,7 @@ def detect_color_in_cell(cell_roi):
         'red': ([136, 87, 111], [180, 255, 255]),
         'green': ([25, 52, 72], [102, 255, 255]),
         'white': ([0, 0, 215], [179, 30, 255]),
-        'black': ([0, 0, 0], [179, 255, 50])
+        'yellow': ([0, 0, 0], [179, 255, 50])
     }
     
     for color, (lower, upper) in color_ranges.items():
@@ -59,7 +59,6 @@ def detect_color_in_cell(cell_roi):
 # Main function
 def main():
     data_sent = False  # Flag to track if data has been sent
-
     while True:
         # Capture a frame from the webcam
         _, frame = cap.read()
@@ -111,8 +110,6 @@ def main():
 
                 detected_color = detect_color_in_cell(cell_roi)
                 if detected_color != 'None':
-                    #print(f"Cell ({j}, {i}): {detected_color}")
-                    #print(type(j), type(j), type(detected_color))
                     picture_data["picture"][f"{j}, {i}"] = detected_color
 
         # Send the picture_data to the server if it hasn't been sent yet
