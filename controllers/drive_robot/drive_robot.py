@@ -147,7 +147,7 @@ def senddata():
                 "name": NAME,
                 "current_position": CURRENT_POS,
                 "color" : COLOR,
-                "direction": 12
+                "angle": 0
             }
         ]
     }
