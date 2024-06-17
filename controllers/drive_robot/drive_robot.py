@@ -1,13 +1,24 @@
 from controller import Robot
+import requests
 
 # Create the robot instance
 robot = Robot()
 
 # Constants
-TIME_STEP = 64
-MAX_SPEED = 3
-WHEEL_RADIUS = 0.05
+TIME_STEP = 5
+MAX_SPEED = 2
+WHEEL_RADIUS = 0.1
 LENGTH_SIDE = 1.0
+
+# Robot variables
+START_POS_X = 0
+START_POS_Y = 9
+CURRENT_POS = [START_POS_X, START_POS_Y]
+COLOR = robot.getCustomData()
+NAME = robot.getName()
+
+# Websockets server URL
+server_url = "http://192.168.0.69:5000/";
 
 # Calculate linear velocity and movement duration
 linear_velocity = WHEEL_RADIUS * MAX_SPEED
@@ -30,7 +41,7 @@ for motor in motors:
 # Function to move a space forward
 def one_space():
     start_time = robot.getTime()
-    end_time = start_time + 3.5  # Duration to drive forward
+    end_time = start_time + 5.01  # Duration to drive forward
     while robot.step(TIME_STEP) != -1:
         current_time = robot.getTime()
         if current_time < end_time:
@@ -49,7 +60,7 @@ def one_space():
 # function to move a space back
 def space_back():
     start_time = robot.getTime()
-    end_time = start_time + 3.5  # Duration to drive forward
+    end_time = start_time + 5.01  # Duration to drive forward
     while robot.step(TIME_STEP) != -1:
         current_time = robot.getTime()
         if current_time < end_time:
@@ -68,8 +79,7 @@ def space_back():
 # Function to turn right by 45 degrees
 def turn_right():
     start_time = robot.getTime()
-    end_time = start_time + (2 - 0.032) # Duration to turn 45 degrees (calibrate as needed)
-    print(start_time)
+    end_time = start_time + 2.95 # Duration to turn 45 degrees (calibrate as needed)
     while robot.step(TIME_STEP) != -1:
         current_time = robot.getTime()
         if current_time < end_time:
@@ -88,7 +98,7 @@ def turn_right():
 # Function to turn left by 45 degrees
 def turn_left():
     start_time = robot.getTime()
-    end_time = start_time + (2 - 0.032)  # Duration to turn 45 degrees (calibrate as needed)
+    end_time = start_time + 2.95  # Duration to turn 45 degrees (calibrate as needed)
     while robot.step(TIME_STEP) != -1:
         current_time = robot.getTime()
         if current_time < end_time:
@@ -116,11 +126,71 @@ def space_left():
     one_space()
     turn_right()
 
+
+# Get the direction the robot has to go
+def direction_fun(current_pos, next_pos):
+    if next_pos[0] > current_pos[0]:
+        return "right"
+    elif next_pos[1] < current_pos[1]:
+        return "up"
+    elif next_pos[1] > current_pos[1]:
+        return "down"
+    elif next_pos[0] < current_pos[0]:
+        return "left"
+    return "wait"
+
+def senddata():
+    # Fill json with the current robot data
+    jsonfile = {
+        "robots": [
+            {
+                "name": NAME,
+                "current_position": CURRENT_POS,
+                "color" : COLOR,
+                "direction": 12
+            }
+        ]
+    }
+    # Send robot data to the server
+    senddata = requests.post(server_url + 'send_data', json = jsonfile)
+
+def move_next_space():
+    global CURRENT_POS
+     # Get robot data from the server
+    response = requests.get(server_url + 'get_data')
+    data = response.json()
+    if 'robots' in data:
+      for robotReceived in data['robots']:
+          if all(key in robotReceived for key in ('name', 'current_position', 'next_position')):
+    # Check if this robot has to move
+              if robotReceived['name'] == NAME:
+    # Check if the server knows the current location of the robot
+                  if robotReceived['current_position'] == CURRENT_POS:
+    # Drive the robot
+                      direction = direction_fun(robotReceived['current_position'], robotReceived['next_position'])
+                      print(direction)
+                      match direction:
+                          case "up":
+                              one_space()
+                          case "down":
+                              space_back()
+                          case "right":
+                              space_right()
+                          case "left":
+                              space_left()
+                          case "wait":
+                              continue
+                      CURRENT_POS = robotReceived['next_position']
+                      senddata()
+          else:
+              print({'message': 'Data received successfully but keys are weird'})
+                     
+senddata()       
 # Main loop
 while robot.step(TIME_STEP) != -1:
-    space_right()
-    break  # Exit after completing the sequence
-
-      
-    
+    if (robot.getTime()%1 < TIME_STEP/1000.0):
+        move_next_space()
+   
+   
+        
     
