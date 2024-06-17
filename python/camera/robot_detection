@@ -1,0 +1,198 @@
+from inference_sdk import InferenceHTTPClient
+import cv2
+import numpy as np
+import json
+import math
+import requests
+import time
+
+API_URL = "https://detect.roboflow.com"
+API_KEY = "6VGpZRZPZWIvAHLZ9IEU"
+MODEL_ID = "robot-keypoint-detection/1"
+
+CLIENT = InferenceHTTPClient(
+    api_url=API_URL,
+    api_key=API_KEY
+)
+
+robot_data = {"robots": []}
+
+# Define the number of grid cells
+grid_rows, grid_cols = 10, 13       # Define the number of grid cells
+start_row, start_col, end_row, end_col= 3, 3, 6, 6      # Define the start and end indices for the desired 4x4 cell range
+
+# Define the region of interest (ROI)
+roi_x1, roi_y1 = 0, 0  # Top-left corner of the ROI
+roi_x2, roi_y2 = 640, 480  # Bottom-right corner of the ROI
+
+# Divide the ROI into a grid
+cell_width = (roi_x2 - roi_x1) // grid_cols
+cell_height = (roi_y2 - roi_y1) // grid_rows
+
+cap = cv2.VideoCapture(0)
+
+def sendData(data, destination):
+    """
+    Send data to a specified destination URL.
+
+    Args:
+        data (dict): The data to be sent.
+        destination (str): The destination URL endpoint.
+
+    Returns:
+        None
+    """
+    url = 'http://192.168.0.69:5000/' + destination
+    response = requests.post(url, json=data)
+    print(response.json())
+
+def draw_grid(frame, grid_rows, grid_cols, cell_width, cell_height):
+    """
+    Draws a grid on the given frame.
+
+    Args:
+        frame (numpy.ndarray): The input frame to draw the grid on.
+        grid_rows (int): The number of rows in the grid.
+        grid_cols (int): The number of columns in the grid.
+        cell_width (int): The width of each grid cell.
+        cell_height (int): The height of each grid cell.
+    """
+    for i in range(grid_rows):
+        for j in range(grid_cols):
+            x1 = j * cell_width
+            y1 = i * cell_height
+            x2 = x1 + cell_width
+            y2 = y1 + cell_height
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 255, 255), 1)
+
+def calculate_angle(x1, y1, x2, y2):
+    # Calculate the differences in coordinates
+    delta_x = x1 - x2
+    delta_y = y1 - y2
+
+    # Calculate the angle using arctan2 and convert it to degrees
+    angle_rad = math.atan2(delta_y, delta_x)
+    angle_deg = math.degrees(angle_rad)
+
+    # Ensure the angle is between 0 and 360 degrees
+    mapped_angle = angle_deg % 360
+    if mapped_angle < 0:
+        mapped_angle += 360  # Ensure angle is positive
+
+    # Round the angle to 1 decimal place
+    rounded_angle = round(mapped_angle, 1)
+
+    return rounded_angle
+
+def run_inference(frame):
+    # Perform inference on the current frame
+    json_data = CLIENT.infer(frame, model_id=MODEL_ID)
+
+    # Convert JSON data to dictionary
+    data = json.loads(json.dumps(json_data))
+
+    bottom_x, bottom_y, top_x, top_y= None, None, None, None        # Variables to store bottom and top keypoint coordinates
+
+    ##### DRAW KEYPOINTS AND BOUNDING BOX #####
+    for prediction in data['predictions']:
+        # Extract bounding box coordinates
+        x = int(prediction['x'])
+        y = int(prediction['y'])
+        width = int(prediction['width'])
+        height = int(prediction['height'])
+
+        x1 = int(x - (width / 2))
+        y1 = int(y - (height / 2))
+        x2 = int(x + (width / 2))
+        y2 = int(y + (height / 2))
+
+        # Draw bounding box
+        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+
+        # Draw keypoints
+        for keypoint in prediction['keypoints']:
+            keypoint_x = int(keypoint['x'])
+            keypoint_y = int(keypoint['y'])
+            class_name = keypoint['class_name']
+            if class_name == 'Top':
+                color = (0, 255, 0)  # Green color for top keypoints
+                top_x, top_y = keypoint_x, keypoint_y
+            elif class_name == 'Bottom':
+                color = (0, 0, 255)  # Red color for bottom keypoints
+                bottom_x, bottom_y = keypoint_x, keypoint_y
+            else:
+                color = (255, 0, 0)  # Blue color for other keypoints
+            cv2.circle(frame, (keypoint_x, keypoint_y), 5, color, -1)
+        
+    ##### MAKE DATA SET FOR SERVER #####
+    for prediction in json_data['predictions']:
+        keypoints = prediction["keypoints"]
+        x_top = keypoints[0]["x"]
+        y_top = keypoints[0]["y"]
+        x_bottom = keypoints[1]["x"]
+        y_bottom = keypoints[1]["y"]
+
+        # Calculate the middle point of the robot
+        x_middle = (x_top + x_bottom) / 2
+        y_middle = (y_top + y_bottom) / 2
+
+        # Convert pixel coordinates to grid coordinates (1 cell = 48 pixels)
+        grid_x = round(x_middle / 48)
+        grid_y = round(y_middle / 48)
+
+        angle = None
+        if bottom_x is not None and bottom_y is not None and top_x is not None and top_y is not None:
+            angle = calculate_angle(bottom_x, bottom_y, top_x, top_y)
+        else:
+            angle = 0  # Set a default angle value if the necessary coordinates are not available
+        
+        robot_count = len(robot_data["robots"]) + 1
+
+        robot_info = {
+            "name": f"Robot{robot_count}",
+            "current_position": [grid_x, grid_y],
+            "color": "blue",
+            "angle": angle
+        }
+        
+        # Check if the robot's position already exists in the list of robots
+        if any(robot['current_position'] == robot_info['current_position'] for robot in robot_data['robots']):
+            # If the robot's position already exists, update the angle and continue to the next robot
+            for robot in robot_data['robots']:
+                if robot['current_position'] == robot_info['current_position']:
+                    robot['angle'] = angle
+                    break
+        else:
+            # If the robot's position doesn't exist, add the new robot to the list
+            robot_data["robots"].append(robot_info)
+
+    return robot_data
+
+def main():
+    while True:
+        ret, frame = cap.read()
+
+        if not ret:
+            break
+
+        draw_grid(frame, grid_rows, grid_cols, cell_width, cell_height)
+
+        robot_data = run_inference(frame)
+        print("\n ----------- \nRobot info:")
+        print(robot_data)
+
+        # Send the robot_data to the server
+        sendData(robot_data, "send_data")
+        time.sleep(1)  # Delay for 1 second
+
+        # Display the modified frames
+        cv2.imshow('Robot detection', frame)
+        
+        # Check for 'x' key press to exit
+        if cv2.waitKey(1) & 0xFF == ord('x'):
+            break
+ 
+if __name__ == "__main__":
+    main()
+
+    
