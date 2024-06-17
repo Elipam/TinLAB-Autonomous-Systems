@@ -13,6 +13,8 @@ import time
 class Pathfinding:
     def __init__(self, width=10, height=10):
         self.robots = {}
+        self.robots_move = {}
+        self.picture = {}
         self.possible_moves = [(1,0), (0,1), (-1,0), (0,-1), (0,0)]
         self.width = width
         self.height = height
@@ -45,6 +47,10 @@ class Pathfinding:
             row, col = value
             self.goal_grid[col][row] = key
 
+    def determine_goals(self):
+        print(self.robots)
+        print(self.picture)
+
     def algorithm(self):
         next_grid = self.make_grid()
         for key, value in self.current_positions.items():
@@ -73,12 +79,37 @@ class Pathfinding:
         if next_grid == self.goal_grid:
             return
         self.algorithm()
+    
+    def quick_move(self):
+        self.robots_move = {'robots':[]}
+        next_grid = self.make_grid()
+        print(self.robots)
+        for key, value in self.robots.items():
+            pos, goal, color, direction = value
+            row, col = pos
+            min_heuristic = float('inf')
+            best_move = None
+            for move in self.possible_moves:
+                next_row, next_col = row + move[0], col + move[1]
+                if not (0 <= next_row < len(next_grid) and 0 <= next_col < len(next_grid[0])):
+                    continue
+                if next_grid[next_col][next_row] != 0:
+                    continue
+                h = self.heuristic((next_row, next_col), goal)
+                if h < min_heuristic:
+                    min_heuristic = h
+                    best_move = move
+            if best_move:
+                next_row, next_col = row + best_move[0], col + best_move[1]
+                next_grid[next_col][next_row] = key
+                self.robots_move['robots'].append({"name":key, "current_position":[row, col], "next_position":[next_row, next_col]}) 
+        return self.robots_move
 
 class RobotServer:
-    def __init__(self):
+    def __init__(self, pathfinding_instance):
         self.app = Flask(__name__)
         self.ip_list = []
-        self.robot_dict = {}
+        self.board = pathfinding_instance
         self.setup_routes()
 
     def setup_routes(self):
@@ -88,21 +119,34 @@ class RobotServer:
             print("Received Data:")
             if 'robots' in data:
                 for robot in data['robots']:
-                    if all(key in robot for key in ('name', 'goal', 'current_position', 'direction')):
-                        self.robot_dict[robot['name']] = [robot['current_position'], robot['goal'], robot['direction']]
+                    if all(key in robot for key in ('name', 'color', 'current_position', 'direction')):
+                        self.board.robots[robot['name']] = [robot['current_position'], [6, 3], robot['color'], robot['direction']]
                     else:
-                        print({'message': 'Data received successfully'})
+                        print({'message': 'Data received successfully but keys are weird'})
             else:
                 print(F"This is not a robots this is {data}")
-            print(self.robot_dict)
+                return jsonify({'message': 'Data received but not processed'})
+            print(self.board.robots)
             return jsonify({'message': 'Data received successfully'})
+
+        @self.app.route('/get_data', methods=['GET'])
+        def send_data():
+            client_ip = request.remote_addr
+            print(f"Next step requested from IP: {client_ip}")
+            data = self.board.quick_move()
+            print(F"Sending to simulation {data}")
+            return jsonify(data)
 
         @self.app.route('/send_picture', methods=['POST'])
         def receive_picture():
             data = request.json
+            if 'picture' in data:
+                self.board.picture = data['picture']
+                self.board.determine_goals()
+                return jsonify({"message": "Picture received successfully"})
             print(data)
-            return jsonify({"message": "received picture"})
-
+            return jsonify({"message": "Picture received, but no picture data found"})
+        
         @self.app.route('/robot_signup', methods=['POST'])
         def receive_signup():
             data = request.json
@@ -122,8 +166,8 @@ class RobotServer:
         self.app.run(host='0.0.0.0', port=5000)
 
 if __name__ == '__main__':
-    server = RobotServer()
     grid = Pathfinding()
+    server = RobotServer(grid)
 
     # Start Flask app in a separate thread
     flask_thread = threading.Thread(target=server.run_flask_app)
