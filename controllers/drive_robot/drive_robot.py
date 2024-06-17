@@ -12,7 +12,7 @@ LENGTH_SIDE = 1.0
 
 # Robot variables
 START_POS_X = 0
-START_POS_Y = 9
+START_POS_Y = 0
 CURRENT_POS = [START_POS_X, START_POS_Y]
 COLOR = robot.getCustomData()
 NAME = robot.getName()
@@ -79,12 +79,12 @@ def space_back():
 # Function to turn right by 45 degrees
 def turn_right():
     start_time = robot.getTime()
-    end_time = start_time + 2.95 # Duration to turn 45 degrees (calibrate as needed)
+    end_time = start_time + 7.10 # Duration to turn 45 degrees (calibrate as needed)
     while robot.step(TIME_STEP) != -1:
         current_time = robot.getTime()
         if current_time < end_time:
-            left_speed = 0.5 * MAX_SPEED
-            right_speed = -0.5 * MAX_SPEED
+            left_speed = 0.2 * MAX_SPEED
+            right_speed = -0.2 * MAX_SPEED
         else:
             left_speed = 0
             right_speed = 0
@@ -98,12 +98,12 @@ def turn_right():
 # Function to turn left by 45 degrees
 def turn_left():
     start_time = robot.getTime()
-    end_time = start_time + 2.95  # Duration to turn 45 degrees (calibrate as needed)
+    end_time = start_time + 7.10  # Duration to turn 45 degrees (calibrate as needed)
     while robot.step(TIME_STEP) != -1:
         current_time = robot.getTime()
         if current_time < end_time:
-            left_speed = -0.5 * MAX_SPEED
-            right_speed = 0.5 * MAX_SPEED
+            left_speed = -0.2 * MAX_SPEED
+            right_speed = 0.2 * MAX_SPEED
         else:
             left_speed = 0
             right_speed = 0
@@ -190,6 +190,7 @@ senddata()
 while robot.step(TIME_STEP) != -1:
     if (robot.getTime()%1 < TIME_STEP/1000.0):
         move_next_space()
+  
    
    
         
