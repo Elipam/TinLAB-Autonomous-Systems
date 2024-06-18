@@ -4,7 +4,6 @@ Created on Thu May 30 13:38:09 2024
 
 @author: spanj
 """
-
 from flask import Flask, request, jsonify, render_template
 import threading
 import requests
@@ -14,6 +13,7 @@ class Pathfinding:
     def __init__(self, width=13, height=10):
         self.robots = {}
         self.robots_move = {}
+        self.robots_step = {}
         self.picture = {}
         self.possible_moves = [(1,0), (0,1), (-1,0), (0,-1), (0,0)]
         self.width = width
@@ -47,9 +47,12 @@ class Pathfinding:
             row, col = value
             self.goal_grid[col][row] = key
 
-    def determine_goals(self):
-        print(self.robots)
-        print(self.picture)
+    def determine_goal(self, color):
+        for key, value in self.picture:
+            if value[0] == color and value[1] == False:
+                self.picture[key] = [value[0], True]
+                return [int(num.strip()) for num in key.split(',')]
+        return [-1, -1]
 
     def algorithm(self):
         next_grid = self.make_grid()
@@ -87,6 +90,12 @@ class Pathfinding:
         for key, value in self.robots.items():
             pos, goal, color, direction = value
             x, y = pos
+            if goal == [-1, -1]:
+                goal = self.determine_goal(color)
+                if goal == [-1, -1]:
+                    next_grid[y][x] = key
+                    self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[x, y]}) 
+                    continue
             min_heuristic = float('inf')
             best_move = None
             for move in self.possible_moves:
@@ -102,7 +111,8 @@ class Pathfinding:
             if best_move:
                 next_x, next_y = x + best_move[0], y + best_move[1]
                 next_grid[next_y][next_x] = key
-                self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[next_x, next_y]}) 
+                self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[next_x, next_y]})
+
         print(self.robots_move['robots'])
         return self.robots_move
 
@@ -122,7 +132,11 @@ class RobotServer:
             if 'robots' in data:
                 for robot in data['robots']:
                     if all(key in robot for key in ('name', 'color', 'current_position', 'angle')):
-                        self.board.robots[robot['name']] = [robot['current_position'], [12, 0], robot['color'], robot['angle']]
+                        if robot['name'] not in self.board.robots:
+                            goal = self.board.determine_goal(robot['color'])
+                        else:
+                            goal = robot['name'][1]
+                        self.board.robots[robot['name']] = [robot['current_position'], goal, robot['color'], robot['angle']]
                     else:
                         print({'message': 'Data received successfully but keys are weird'})
                         print(data)
@@ -144,7 +158,10 @@ class RobotServer:
         def receive_picture():
             data = request.json
             if 'picture' in data:
-                self.board.picture = data['picture']
+                transformed_picture = {
+                    coords: [color, False] for coords, color in data['picture'].items()
+                }   
+                self.board.picture = transformed_picture
                 self.board.determine_goals()
                 return jsonify({"message": "Picture received successfully"})
             print(data)
@@ -165,8 +182,15 @@ class RobotServer:
         def index():
             return render_template('index.html', state=self.state)
 
-        @self.app.route('/get_state', methods=['GET'])
+        @self.app.route('/get_state/<robot_id>', methods=['GET'])
         def get_state():
+            temp = self.state
+            self.state = "STOP"
+            return jsonify({'state': temp})
+        
+        @self.app.route('/set_state', methods=['POST'])
+        def set_state():
+            self.state = request.json.get('state')
             return jsonify({'state': self.state})
 
     def run_flask_app(self):
@@ -182,43 +206,6 @@ if __name__ == '__main__':
     flask_thread.start()
     time.sleep(2)
 
-    # Temp, only here to wait before testing 
-    while not server.ip_list:
-        time.sleep(1)
-
-    # Now you can send a request using the requests library
-    data = {
-        "robots": [
-            {
-                "name": "Robot1",
-                "current_position": [1, 1],
-                "goal": [3, 4],
-                "direction": 12
-            },
-            {
-                "name": "Robot2",
-                "current_position": [0, 0],
-                "goal": [5, 6],
-                "direction": 12
-            },
-            {
-                "name": "Robot3",
-                "current_position": [5, 8],
-                "goal": [5, 2],
-                "direction": 12
-            }
-        ]
-    }
-    server.ip_list[0] = "127.0.0.1" + ":5000"
-    url = 'http://' + server.ip_list[0] + '/send_data'
-    try:
-        response = requests.post(url, json=data)
-    except Exception as e:
-        print("Failed to send POST request:", e)
-
-    print(response.json())
-
-    grid.print_grid()
     # Keep the main thread alive if necessary
     while True:
         time.sleep(1)
