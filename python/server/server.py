@@ -182,11 +182,11 @@ class RobotServer:
         def index():
             return render_template('index.html', state=self.state)
 
-        @self.app.route('/get_state/<robot_id>', methods=['GET'])
+        @self.app.route('/get_state', methods=['GET'])
         def get_state():
             temp = self.state
             self.state = "STOP"
-            return jsonify({'state': temp})
+            return jsonify({'robot1': temp, 'robot2': temp})
         
         @self.app.route('/set_state', methods=['POST'])
         def set_state():
