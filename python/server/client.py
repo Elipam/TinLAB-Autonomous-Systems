@@ -133,8 +133,8 @@ url = 'http://192.168.0.69:5000/'
 # response = requests.post(url + 'send_data', json=robots_json)
 # print(response.json())
 
-# response = requests.post(url + 'send_picture', json=picture_json)
-# print(response.json())
+response = requests.post(url + 'send_picture', json=picture_json)
+print(response.json())
 
-response = requests.post(url + 'set_state', {'state': 'MOVE_FORWARD'})
+# response = requests.post(url + 'set_state', {'state': 'MOVE_FORWARD'})
 # print(response.json())
