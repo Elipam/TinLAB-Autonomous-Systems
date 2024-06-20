@@ -14,26 +14,25 @@ class Pathfinding:
         self.robots = {}
         self.robots_move = {}
         self.robots_step = {}
-        self.picture = {
-  "picture": {
-    "3, 3": "Red",
-    "3, 4": "Blue",
-    "3, 5": "Green",
-    "3, 6": "Red",
-    "4, 3": "Red",
-    "4, 4": "Green",
-    "4, 5": "Green",
-    "4, 6": "Red",
-    "5, 3": "Blue",
-    "5, 4": "Green",
-    "5, 5": "Red",
-    "5, 6": "Blue",
-    "6, 3": "Blue",
-    "6, 4": "Red",
-    "6, 5": "Blue",
-    "6, 6": "Green"
-  }
-}
+        self.picture = {}
+#         self.picture = {
+#     "3, 3": "Red",
+#     "3, 4": "Blue",
+#     "3, 5": "Green",
+#     "3, 6": "Red",
+#     "4, 3": "Red",
+#     "4, 4": "Green",
+#     "4, 5": "Green",
+#     "4, 6": "Red",
+#     "5, 3": "Blue",
+#     "5, 4": "Green",
+#     "5, 5": "Red",
+#     "5, 6": "Blue",
+#     "6, 3": "Blue",
+#     "6, 4": "Red",
+#     "6, 5": "Blue",
+#     "6, 6": "Green"
+#   }
 
         self.possible_moves = [(1,0), (0,1), (-1,0), (0,-1), (0,0)]
         self.width = width
@@ -68,7 +67,7 @@ class Pathfinding:
             self.goal_grid[col][row] = key
 
     def determine_goal(self, color):
-        for key, value in self.picture:
+        for key, value in self.picture.items():
             if value[0] == color and value[1] == False:
                 self.picture[key] = [value[0], True]
                 return [int(num.strip()) for num in key.split(',')]
@@ -112,6 +111,7 @@ class Pathfinding:
             x, y = pos
             if goal == [-1, -1]:
                 goal = self.determine_goal(color)
+                print(f"quick_move {goal}")
                 if goal == [-1, -1]:
                     next_grid[y][x] = key
                     self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[x, y]}) 
@@ -220,7 +220,7 @@ class RobotServer:
             else:
                 print(f"This is not a robots this is {data}")
                 return jsonify({'message': 'Data received but not processed'})
-            print(f"received {data} own {self.board.robots}")
+            # print(f"received {data} own {self.board.robots}")
             return jsonify({'message': 'Data received successfully'})
 
         @self.app.route('/get_data', methods=['GET'])
@@ -228,7 +228,7 @@ class RobotServer:
             client_ip = request.remote_addr
             print(f"Next step requested from IP: {client_ip}")
             data = self.board.quick_move()
-            print(f"Sending to simulation {data}")
+            # print(f"Sending to simulation {data}")
             return jsonify(data)
 
         @self.app.route('/send_picture', methods=['POST'])
@@ -239,7 +239,7 @@ class RobotServer:
                     coords: [color, False] for coords, color in data['picture'].items()
                 }   
                 self.board.picture = transformed_picture
-                self.board.determine_goals()
+                # self.board.determine_goal()
                 return jsonify({"message": "Picture received successfully"})
             print(data)
             return jsonify({"message": "Picture received, but no picture data found"})
@@ -261,7 +261,7 @@ class RobotServer:
 
         @self.app.route('/get_state', methods=['GET'])
         def get_state():
-            return jsonify(self.robots_step['robots'])
+            return jsonify(self.board.robots_step['robots'])
         
         @self.app.route('/set_state', methods=['POST'])
         def set_state():
@@ -281,6 +281,30 @@ if __name__ == '__main__':
     flask_thread.start()
     time.sleep(2)
 
+    picture_json = {
+        "picture": {
+            "3, 3": "Red",
+            "3, 4": "Blue",
+            "3, 5": "Green",
+            "3, 6": "Red",
+            "4, 3": "Red",
+            "4, 4": "Green",
+            "4, 5": "Green",
+            "4, 6": "Red",
+            "5, 3": "Blue",
+            "5, 4": "Green",
+            "5, 5": "Red",
+            "5, 6": "Blue",
+            "6, 3": "Blue",
+            "6, 4": "Red",
+            "6, 5": "Blue",
+            "6, 6": "Green"
+        }
+    }
+
+    url = 'http://192.168.0.69:5000/'
+    response = requests.post(url + 'send_picture', json=picture_json)
+    print(response.json())
     # Keep the main thread alive if necessary
     while True:
         time.sleep(1)
