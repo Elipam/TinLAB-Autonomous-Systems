@@ -13,7 +13,7 @@ class Pathfinding:
     def __init__(self, width=13, height=10):
         self.robots = {}
         self.robots_move = {}
-        self.robots_step = {}
+        self.robots_step = {'robots':[]}
         self.picture = {}
 #         self.picture = {
 #     "3, 3": "Red",
