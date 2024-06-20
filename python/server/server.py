@@ -14,7 +14,27 @@ class Pathfinding:
         self.robots = {}
         self.robots_move = {}
         self.robots_step = {}
-        self.picture = {}
+        self.picture = {
+  "picture": {
+    "3, 3": "Red",
+    "3, 4": "Blue",
+    "3, 5": "Green",
+    "3, 6": "Red",
+    "4, 3": "Red",
+    "4, 4": "Green",
+    "4, 5": "Green",
+    "4, 6": "Red",
+    "5, 3": "Blue",
+    "5, 4": "Green",
+    "5, 5": "Red",
+    "5, 6": "Blue",
+    "6, 3": "Blue",
+    "6, 4": "Red",
+    "6, 5": "Blue",
+    "6, 6": "Green"
+  }
+}
+
         self.possible_moves = [(1,0), (0,1), (-1,0), (0,-1), (0,0)]
         self.width = width
         self.height = height
