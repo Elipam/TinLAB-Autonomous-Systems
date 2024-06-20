@@ -129,12 +129,12 @@ robots_json = {
   ]
 }
 
-url = 'http://127.0.0.1:5000/'
+url = 'http://192.168.0.69:5000/'
 # response = requests.post(url + 'send_data', json=robots_json)
 # print(response.json())
 
-response = requests.post(url + 'send_picture', json=picture_json)
-print(response.json())
+# response = requests.post(url + 'send_picture', json=picture_json)
+# print(response.json())
 
-# response = requests.get(url + 'get_state')
+response = requests.post(url + 'set_state', {'state': 'MOVE_FORWARD'})
 # print(response.json())
