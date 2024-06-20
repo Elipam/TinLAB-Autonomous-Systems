@@ -70,7 +70,9 @@ class Pathfinding:
         for key, value in self.picture.items():
             if value[0] == color and value[1] == False:
                 self.picture[key] = [value[0], True]
-                return [int(num.strip()) for num in key.split(',')]
+                goal = [int(num.strip()) for num in key.split(',')]
+                print(f"Determine_goal {goal}")
+                return goal
         return [-1, -1]
 
     def algorithm(self):
@@ -108,6 +110,7 @@ class Pathfinding:
         print(self.robots)
         for key, value in self.robots.items():
             pos, goal, color, direction = value
+            print(f"quick move start for {goal} {value[1]}")
             x, y = pos
             if goal == [-1, -1]:
                 goal = self.determine_goal(color)
@@ -124,6 +127,7 @@ class Pathfinding:
                     continue
                 if next_grid[next_y][next_x] != 0:
                     continue
+                print(f"quick_move heuristic {next_x} {next_y}, {goal}")
                 h = self.heuristic((next_x, next_y), goal)
                 if h < min_heuristic:
                     min_heuristic = h
@@ -212,6 +216,7 @@ class RobotServer:
                         if robot['name'] not in self.board.robots:
                             goal = self.board.determine_goal(robot['color'])
                         else:
+                            print(f"receive data robot not in board {robot['name'][1]}")
                             goal = robot['name'][1]
                         self.board.robots[robot['name']] = [robot['current_position'], goal, robot['color'], robot['angle']]
                     else:
@@ -265,8 +270,8 @@ class RobotServer:
         
         @self.app.route('/set_state', methods=['POST'])
         def set_state():
-            self.state = request.json.get('state')
-            return jsonify({'state': self.state})
+            self.board.robots_step = request.json
+            return jsonify({'state': self.board.robots_step})
 
     def run_flask_app(self):
         self.app.run(host='0.0.0.0', port=5000)
