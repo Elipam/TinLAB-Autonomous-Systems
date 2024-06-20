@@ -8,22 +8,22 @@ import requests
 
 picture_json = {
   "picture": {
-    "3, 3": "red",
-    "3, 4": "blue",
-    "3, 5": "yellow",
-    "3, 6": "white",
-    "4, 3": "white",
-    "4, 4": "green",
-    "4, 5": "green",
-    "4, 6": "red",
-    "5, 3": "yellow",
-    "5, 4": "white",
-    "5, 5": "red",
-    "5, 6": "blue",
-    "6, 3": "blue",
-    "6, 4": "red",
-    "6, 5": "yellow",
-    "6, 6": "green"
+    "3, 3": "Red",
+    "3, 4": "Blue",
+    "3, 5": "Green",
+    "3, 6": "Red",
+    "4, 3": "Red",
+    "4, 4": "Green",
+    "4, 5": "Green",
+    "4, 6": "Red",
+    "5, 3": "Blue",
+    "5, 4": "Green",
+    "5, 5": "Red",
+    "5, 6": "Blue",
+    "6, 3": "Blue",
+    "6, 4": "Red",
+    "6, 5": "Blue",
+    "6, 6": "Green"
   }
 }
 
@@ -51,19 +51,19 @@ robots_json = {
     {
       "name": "Robot4",
       "current_position": [3, 7],
-      "color": "red",
+      "color": "Red",
       "angle": 0
     },
     {
       "name": "Robot5",
       "current_position": [8, 2],
-      "color": "blue",
+      "color": "Blue",
       "angle": 0
     },
     {
       "name": "Robot6",
       "current_position": [6, 9],
-      "color": "green",
+      "color": "Green",
       "angle": 0
     },
     {
