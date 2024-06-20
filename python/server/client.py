@@ -4,6 +4,7 @@ Created on Thu Jun  6 14:32:41 2024
 
 @author: spanj
 """
+import time
 import requests
 
 picture_json = {
@@ -138,3 +139,30 @@ print(response.json())
 
 # response = requests.post(url + 'set_state', {'state': 'MOVE_FORWARD'})
 # print(response.json())
+
+robot_actions = {
+    'robots': [
+        {
+            "name": "Robot1",
+            "next_steps": ["MOVE_RIGHT", "MOVE_FORWARD", "MOVE_LEFT", "MOVE_FORWARD", "MOVE_RIGHT", "MOVE_FORWARD", "MOVE_LEFT", "MOVE_FORWARD"]
+        },
+        {
+            "name": "Robot2",
+            "next_steps": ["MOVE_FORWARD", "MOVE_RIGHT", "MOVE_FORWARD", "MOVE_LEFT", "MOVE_FORWARD"]
+        }
+    ]
+}
+
+while True:
+    # POST-aanvraag naar de 'set_state' route
+    response = requests.post(url + 'set_state', json=robot_actions)
+    if response.status_code == 200:
+        try:
+            data = response.json()
+            print(data)
+        except json.JSONDecodeError:
+            print("Failed to decode JSON from response")
+    else:
+        print(f"POST request failed with status {response.status_code}")
+    
+    time.sleep(4)

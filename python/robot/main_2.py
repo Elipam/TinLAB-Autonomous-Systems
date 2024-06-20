@@ -39,9 +39,8 @@ def handle_get_request():
         if response.status_code == 200:
             data = response.json()
             print("Ontvangen gegevens:", data)
-            current_state = data.get('state')
-            print(f"Huidige state is: {current_state}")
-            execute_command(current_state)
+            for robot in data.get('robots', []):
+                print(f"Robot {robot['name']} heeft de volgende acties: {robot['next_steps']}")
         else:
             print("Mislukt om gegevens op te halen:", response.status_code)
     except Exception as e:
@@ -50,46 +49,44 @@ def handle_get_request():
 # Functie om commando's uit te voeren
 def execute_command(command):
     if command == 'MOVE_FORWARD':
-        MoveForward(1)
+        MoveForward()
+        print('kjsdf')
     elif command == 'MOVE_BACKWARD':
-        MoveBackward(1)
+        MoveBackward()
     elif command == 'MOVE_LEFT':
-        MoveLeft(1)
+        MoveLeft()
     elif command == 'MOVE_RIGHT':
-        MoveRight(1)
+        MoveRight()
     else:
         print("Onbekend commando:", command)
 
 # Definieer functies voor bewegingen
-def MoveForward(duration):
-    print(f"Moving forward for {duration} seconds")
+def MoveForward():
+    print("Moving forward")
     pwmL.duty_u16(6000)
-    pwmR.duty_u16(4000)
-    time.sleep(duration)
+    pwmR.duty_u16(3700)
+    time.sleep(2)
     pwmL.duty_u16(5000)
     pwmR.duty_u16(5000)
 
-def MoveBackward(duration):
-    print(f"Moving backward for {duration} seconds")
-    pwmL.duty_u16(4000)
+def MoveBackward():
+    pwmL.duty_u16(3700)
     pwmR.duty_u16(6000)
-    time.sleep(duration)
+    time.sleep(2)
     pwmL.duty_u16(5000)
     pwmR.duty_u16(5000)
 
-def MoveLeft(duration):
-    print(f"Turning left for {duration} seconds")
-    pwmL.duty_u16(4000)
-    pwmR.duty_u16(4000)
-    time.sleep(duration)
+def MoveLeft():
+    pwmL.duty_u16(4300)
+    pwmR.duty_u16(4300)
+    time.sleep(0.4)
     pwmL.duty_u16(5000)
     pwmR.duty_u16(5000)
 
-def MoveRight(duration):
-    print(f"Turning right for {duration} seconds")
-    pwmL.duty_u16(6000)
-    pwmR.duty_u16(6000)
-    time.sleep(duration)
+def MoveRight():
+    pwmL.duty_u16(5700)
+    pwmR.duty_u16(5700)
+    time.sleep(0.31)
     pwmL.duty_u16(5000)
     pwmR.duty_u16(5000)
 
@@ -107,5 +104,6 @@ next_get_request_time = time.time() + get_request_interval
 while True:
     # Behandel GET-verzoeken op gespecificeerd interval
     if time.time() >= next_get_request_time:
+        print('sdsfdfds')
         handle_get_request()
         next_get_request_time = time.time() + get_request_interval
