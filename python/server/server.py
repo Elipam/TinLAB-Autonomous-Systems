@@ -106,11 +106,13 @@ class Pathfinding:
     
     def quick_move(self):
         self.robots_move = {'robots':[]}
-        next_grid = self.make_grid()
-        print(self.robots)
+        next_grid = self.current_grid[:][:]
+        print("Current grid start quick_move")
+        self.print_grid()
+        print("Next grid start quick_move")
+        self.print_grid(next_grid)
         for key, value in self.robots.items():
             pos, goal, color, direction = value
-            print(f"quick move start for {goal} {value[1]}")
             x, y = pos
             if goal == [-1, -1]:
                 goal = self.determine_goal(color)
@@ -127,7 +129,6 @@ class Pathfinding:
                     continue
                 if next_grid[next_y][next_x] != 0:
                     continue
-                print(f"quick_move heuristic {next_x} {next_y}, {goal}")
                 h = self.heuristic((next_x, next_y), goal)
                 if h < min_heuristic:
                     min_heuristic = h
@@ -139,7 +140,7 @@ class Pathfinding:
                 
                 self.robots_step = {'robots':[]}
                 self.robots_step['robots'].append({"name":key, "next_steps":self.determine_steps(best_move, direction)}) 
-
+        print(f"quick move moves: {self.robots_move} : added1")
         return self.robots_move
     
     def determine_steps(self, move, angle):
@@ -215,7 +216,7 @@ class RobotServer:
                         if robot['name'] not in self.board.robots:
                             goal = self.board.determine_goal(robot['color'])
                         else:
-                            goal = self.board.robots['name']['goal']
+                            goal = self.board.robots[robot['name']][1]
                         self.board.robots[robot['name']] = [robot['current_position'], goal, robot['color'], robot['angle']]
                     else:
                         print({'message': 'Data received successfully but keys are weird'})
@@ -306,9 +307,119 @@ if __name__ == '__main__':
         }
     }
 
-    url = 'http://192.168.0.69:5000/'
+    robots_json = {
+        "robots": [
+            {
+            "name": "Robot1",
+            "current_position": [1, 1],
+            "color": "Green",
+            "angle": 0
+            },
+            {
+            "name": "Robot2",
+            "current_position": [0, 0],
+            "color": "Green",
+            "angle": 0
+            },
+            {
+            "name": "Robot3",
+            "current_position": [5, 8],
+            "color": "Red",
+            "angle": 0
+            },
+            {
+            "name": "Robot4",
+            "current_position": [3, 7],
+            "color": "Red",
+            "angle": 0
+            },
+            {
+            "name": "Robot5",
+            "current_position": [8, 2],
+            "color": "Blue",
+            "angle": 0
+            },
+            {
+            "name": "Robot6",
+            "current_position": [6, 9],
+            "color": "Green",
+            "angle": 0
+            },
+            {
+            "name": "Robot7",
+            "current_position": [2, 3],
+            "color": "Red",
+            "angle": 0
+            },
+            {
+            "name": "Robot8",
+            "current_position": [9, 1],
+            "color": "Blue",
+            "angle": 0
+            },
+            {
+            "name": "Robot9",
+            "current_position": [4, 4],
+            "color": "Blue",
+            "angle": 0
+            },
+            {
+            "name": "Robot10",
+            "current_position": [7, 5],
+            "color": "Red",
+            "angle": 0
+            },
+            {
+            "name": "Robot11",
+            "current_position": [0, 6],
+            "color": "Green",
+            "angle": 0
+            },
+            {
+            "name": "Robot12",
+            "current_position": [5, 5],
+            "color": "Blue",
+            "angle": 0
+            },
+            {
+            "name": "Robot13",
+            "current_position": [9, 9],
+            "color": "Red",
+            "angle": 0
+            },
+            {
+            "name": "Robot14",
+            "current_position": [2, 8],
+            "color": "Green",
+            "angle": 0
+            },
+            {
+            "name": "Robot15",
+            "current_position": [8, 3],
+            "color": "Blue",
+            "angle": 0
+            },
+            {
+            "name": "Robot16",
+            "current_position": [1, 9],
+            "color": "Red",
+            "angle": 0
+            }
+        ]
+    }
+    grid.print_grid()
+    url = 'http://127.0.0.1:5000/'
     response = requests.post(url + 'send_picture', json=picture_json)
     print(response.json())
+
+    grid.print_grid()
+    response = requests.post(url + 'send_data', json=robots_json)
+    print(response.json())
+    grid.print_grid()
+    response = requests.get(url + 'get_data')
+    print(response.json())
+    grid.print_grid()
+
     # Keep the main thread alive if necessary
     while True:
         time.sleep(1)
