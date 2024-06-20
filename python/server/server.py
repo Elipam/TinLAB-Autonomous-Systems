@@ -111,10 +111,67 @@ class Pathfinding:
             if best_move:
                 next_x, next_y = x + best_move[0], y + best_move[1]
                 next_grid[next_y][next_x] = key
-                self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[next_x, next_y]})
+                self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[next_x, next_y], "angle": direction})
+                
+                self.robots_step = {'robots':[]}
+                self.robots_step['robots'].append({"name":key, "next_steps":self.determine_steps(best_move, direction)}) 
 
         print(self.robots_move['robots'])
         return self.robots_move
+    
+    def determine_steps(self, move, angle):
+        # Determine the target direction based on the move
+        target_direction = None
+        if move == (0, 0):
+            return ["WAIT"]
+        elif move == (1, 0):  # Right
+            target_direction = "right"
+        elif move == (0, 1):  # Up
+            target_direction = "up"
+        elif move == (-1, 0):  # Left
+            target_direction = "left"
+        elif move == (0, -1):  # Down
+            target_direction = "down"
+
+        # Get the current direction
+        current_direction = self.get_direction(angle)
+        
+        # Determine the turning direction
+        turns = []
+        if current_direction != target_direction:
+            directions_order = ["up", "right", "down", "left"]
+            current_index = directions_order.index(current_direction)
+            target_index = directions_order.index(target_direction)
+
+            # Calculate the shortest turn direction
+            if (target_index - current_index) % 4 == 1:
+                turns.append("TURN_RIGHT")
+            elif (target_index - current_index) % 4 == 3:
+                turns.append("TURN_LEFT")
+            elif (target_index - current_index) % 4 == 2:
+                turns.append("TURN_RIGHT")
+                turns.append("TURN_RIGHT")
+            else:
+                turns.append("TURN_LEFT")
+                turns.append("TURN_LEFT")
+
+        return turns + ["MOVE_FORWARD"]
+    
+    def get_direction(self, angle):
+        directions = {
+        "up": (315, 360, 0, 45),
+        "right": (45, 135),
+        "down": (135, 225),
+        "left": (225, 315)
+    }
+        if (angle >= directions["up"][0] and angle < directions["up"][1]) or (angle >= directions["up"][2] and angle <= directions["up"][3]):
+            return "up"
+        elif angle >= directions["right"][0] and angle < directions["right"][1]:
+            return "right"
+        elif angle >= directions["down"][0] and angle < directions["down"][1]:
+            return "down"
+        elif angle >= directions["left"][0] and angle < directions["left"][1]:
+            return "left"
 
 class RobotServer:
     def __init__(self, pathfinding_instance):
@@ -184,9 +241,7 @@ class RobotServer:
 
         @self.app.route('/get_state', methods=['GET'])
         def get_state():
-            temp = self.state
-            self.state = "STOP"
-            return jsonify({'robot1': temp, 'robot2': temp})
+            return jsonify(self.robots_step['robots'])
         
         @self.app.route('/set_state', methods=['POST'])
         def set_state():
