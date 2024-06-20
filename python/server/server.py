@@ -140,7 +140,6 @@ class Pathfinding:
                 self.robots_step = {'robots':[]}
                 self.robots_step['robots'].append({"name":key, "next_steps":self.determine_steps(best_move, direction)}) 
 
-        print(self.robots_move['robots'])
         return self.robots_move
     
     def determine_steps(self, move, angle):
@@ -216,8 +215,7 @@ class RobotServer:
                         if robot['name'] not in self.board.robots:
                             goal = self.board.determine_goal(robot['color'])
                         else:
-                            print(f"receive data robot not in board {robot['name'][1]}")
-                            goal = robot['name'][1]
+                            goal = self.board.robots['name']['goal']
                         self.board.robots[robot['name']] = [robot['current_position'], goal, robot['color'], robot['angle']]
                     else:
                         print({'message': 'Data received successfully but keys are weird'})
@@ -266,6 +264,7 @@ class RobotServer:
 
         @self.app.route('/get_state', methods=['GET'])
         def get_state():
+            self.board.quick_move() # IMPORTANT
             return jsonify(self.board.robots_step['robots'])
         
         @self.app.route('/set_state', methods=['POST'])
