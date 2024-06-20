@@ -104,6 +104,5 @@ next_get_request_time = time.time() + get_request_interval
 while True:
     # Behandel GET-verzoeken op gespecificeerd interval
     if time.time() >= next_get_request_time:
-        print('sdsfdfds')
         handle_get_request()
         next_get_request_time = time.time() + get_request_interval

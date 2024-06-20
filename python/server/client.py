@@ -4,6 +4,7 @@ Created on Thu Jun  6 14:32:41 2024
 
 @author: spanj
 """
+import json
 import time
 import requests
 
@@ -130,12 +131,12 @@ robots_json = {
   ]
 }
 
-url = 'http://192.168.0.69:5000/'
+url = 'http://192.168.0.25:5000/'
 # response = requests.post(url + 'send_data', json=robots_json)
 # print(response.json())
 
-response = requests.post(url + 'send_picture', json=picture_json)
-print(response.json())
+# response = requests.post(url + 'send_picture', json=picture_json)
+# print(response.json())
 
 # response = requests.post(url + 'set_state', {'state': 'MOVE_FORWARD'})
 # print(response.json())
@@ -159,7 +160,6 @@ while True:
     if response.status_code == 200:
         try:
             data = response.json()
-            print(data)
         except json.JSONDecodeError:
             print("Failed to decode JSON from response")
     else:
