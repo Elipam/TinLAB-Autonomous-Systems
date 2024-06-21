@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu May 30 13:38:09 2024
-
-@author: spanj
-"""
 from flask import Flask, request, jsonify, render_template
 import threading
 import requests
@@ -15,31 +9,11 @@ class Pathfinding:
         self.robots_move = {}
         self.robots_step = {'robots':[]}
         self.picture = {}
-#         self.picture = {
-#     "3, 3": "Red",
-#     "3, 4": "Blue",
-#     "3, 5": "Green",
-#     "3, 6": "Red",
-#     "4, 3": "Red",
-#     "4, 4": "Green",
-#     "4, 5": "Green",
-#     "4, 6": "Red",
-#     "5, 3": "Blue",
-#     "5, 4": "Green",
-#     "5, 5": "Red",
-#     "5, 6": "Blue",
-#     "6, 3": "Blue",
-#     "6, 4": "Red",
-#     "6, 5": "Blue",
-#     "6, 6": "Green"
-#   }
-
         self.possible_moves = [(1,0), (0,1), (-1,0), (0,-1), (0,0)]
         self.width = width
         self.height = height
         self.current_grid = self.make_grid()
         self.goal_grid = self.make_grid()
-        #self.initialize_grids()
 
     def heuristic(self, a, b):
         return abs(a[0] - b[0]) + abs(a[1] - b[1])
@@ -57,14 +31,6 @@ class Pathfinding:
                 print(f" {element}", end='')
             print(' |')
         print(f"+{len(grid[0])*'-'*2+'-'}+")
-
-    def initialize_grids(self):
-        for key, value in self.current_positions.items():
-            row, col = value
-            self.current_grid[col][row] = key
-        for key, value in self.goal_positions.items():
-            row, col = value
-            self.goal_grid[col][row] = key
 
     def determine_goal(self, color, current_position):
         min_heuristic = float('inf')
@@ -294,113 +260,8 @@ if __name__ == '__main__':
         }
     }
 
-    robots_json = {
-        "robots": [
-            {
-            "name": "Robot1",
-            "current_position": [1, 1],
-            "color": "Green",
-            "angle": 0
-            },
-            {
-            "name": "Robot2",
-            "current_position": [0, 0],
-            "color": "Green",
-            "angle": 0
-            },
-            {
-            "name": "Robot3",
-            "current_position": [5, 8],
-            "color": "Red",
-            "angle": 0
-            },
-            {
-            "name": "Robot4",
-            "current_position": [3, 7],
-            "color": "Red",
-            "angle": 0
-            },
-            {
-            "name": "Robot5",
-            "current_position": [8, 2],
-            "color": "Blue",
-            "angle": 0
-            },
-            {
-            "name": "Robot6",
-            "current_position": [6, 9],
-            "color": "Green",
-            "angle": 0
-            },
-            {
-            "name": "Robot7",
-            "current_position": [2, 3],
-            "color": "Red",
-            "angle": 0
-            },
-            {
-            "name": "Robot8",
-            "current_position": [9, 1],
-            "color": "Blue",
-            "angle": 0
-            },
-            {
-            "name": "Robot9",
-            "current_position": [4, 4],
-            "color": "Blue",
-            "angle": 0
-            },
-            {
-            "name": "Robot10",
-            "current_position": [7, 5],
-            "color": "Red",
-            "angle": 0
-            },
-            {
-            "name": "Robot11",
-            "current_position": [0, 6],
-            "color": "Green",
-            "angle": 0
-            },
-            {
-            "name": "Robot12",
-            "current_position": [5, 5],
-            "color": "Blue",
-            "angle": 0
-            },
-            {
-            "name": "Robot13",
-            "current_position": [9, 9],
-            "color": "Red",
-            "angle": 0
-            },
-            {
-            "name": "Robot14",
-            "current_position": [2, 8],
-            "color": "Green",
-            "angle": 0
-            },
-            {
-            "name": "Robot15",
-            "current_position": [8, 3],
-            "color": "Blue",
-            "angle": 0
-            },
-            {
-            "name": "Robot16",
-            "current_position": [1, 9],
-            "color": "Red",
-            "angle": 0
-            }
-        ]
-    }
-
     url = 'http://127.0.0.1:5000/'
     response = requests.post(url + 'send_picture', json=picture_json)
-
-    # response = requests.post(url + 'send_data', json=robots_json)
-
-    # response = requests.get(url + 'get_data')
     # Keep the main thread alive, ctrl and c to interrupt
     while True:
         time.sleep(1)
