@@ -205,6 +205,16 @@ class RobotServer:
         def index():
             return render_template('index.html', state=self.state)
 
+        @self.app.route('/get_state', methods=['GET'])
+        def get_state():
+            self.board.quick_move() # IMPORTANT
+            return jsonify(self.board.robots_step['robots'])
+        
+        @self.app.route('/set_state', methods=['POST'])
+        def set_state():
+            self.board.robots_step = request.json
+            return jsonify({'state': self.board.robots_step})
+
     def run_flask_app(self):
         self.app.run(host='0.0.0.0', port=5000)
 
