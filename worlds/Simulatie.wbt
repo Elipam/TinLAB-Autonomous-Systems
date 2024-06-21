@@ -8,8 +8,8 @@ WorldInfo {
   basicTimeStep 16
 }
 Viewpoint {
-  orientation 0.5370398778003016 -0.5339310300397386 -0.6530741342397055 4.25662746596219
-  position 6.583698980217438 -11.973409143699378 27.61852678555152
+  orientation 0.5577689732502473 -0.5650533177315544 -0.6079543737813947 4.210249013898877
+  position 5.352516516606184 -6.3908512589156174 21.49125908056344
 }
 TexturedBackground {
   texture "morning_cloudy_empty"
@@ -23,7 +23,7 @@ RectangleArena {
   wallHeight 1.5
 }
 Robot {
-  translation 12.01 -9.02 0.098806
+  translation 12.03 -1.98 0.0988145
   rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
   children [
     DistanceSensor {
@@ -50,7 +50,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 0.9999999999999647 -1.8790074833068118e-07 1.879014359628332e-07 1.5707999856069208
+        rotation 0.9999999999999647 -1.8790074833068145e-07 1.8790143596283312e-07 1.5707999856069161
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -83,8 +83,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.09999999999756642 -0.12 3.6402200000012706e-06
-        rotation 0.9999999999998924 -3.276573378922375e-07 3.277112492656089e-07 1.5707999857593695
+        translation 0.09999999999756642 -0.12 3.640220000001277e-06
+        rotation 0.9999999999998924 -3.2765733789223654e-07 3.277112492656089e-07 1.5707999857593695
         children [
           USE WHEELSIZE
         ]
@@ -127,7 +127,7 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1000000000015456 0.12 4.130470000004354e-06
+        translation -0.1000000000015456 0.12 4.130470000004341e-06
         rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
         children [
           USE WHEELSIZE
@@ -143,10 +143,10 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "red,12,9"
+  customData "red,12,2"
 }
 Robot {
-  translation 0.01 -7.97 0.088801
+  translation 8.03 -8.97 0.088809
   rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
   children [
     DistanceSensor {
@@ -173,7 +173,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 0.9999999999999647 -1.8790074833068118e-07 1.879014359628332e-07 1.5707999856069208
+        rotation 0.9999999999999647 -1.8790074833068145e-07 1.8790143596283312e-07 1.5707999856069161
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -206,8 +206,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.09999999999756642 -0.12 3.6402200000012706e-06
-        rotation 0.9999999999998924 -3.276573378922375e-07 3.277112492656089e-07 1.5707999857593695
+        translation 0.09999999999756642 -0.12 3.640220000001277e-06
+        rotation 0.9999999999998924 -3.2765733789223654e-07 3.277112492656089e-07 1.5707999857593695
         children [
           USE WHEELSIZE
         ]
@@ -250,7 +250,7 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1000000000015456 0.12 4.130470000004354e-06
+        translation -0.1000000000015456 0.12 4.130470000004341e-06
         rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
         children [
           USE WHEELSIZE
@@ -266,10 +266,10 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "red,0,8"
+  customData "red,8,9"
 }
 Robot {
-  translation 1.03 -7.97 0.098801
+  translation 0.0200107 -9.02001 0.0987997
   rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
   children [
     DistanceSensor {
@@ -296,7 +296,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 0.9999999999999647 -1.8790074833068118e-07 1.879014359628332e-07 1.5707999856069208
+        rotation 0.9999999999999647 -1.8790074833068145e-07 1.8790143596283312e-07 1.5707999856069161
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -329,8 +329,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.09999999999756642 -0.12 3.6402200000012706e-06
-        rotation 0.9999999999998924 -3.276573378922375e-07 3.277112492656089e-07 1.5707999857593695
+        translation 0.09999999999756642 -0.12 3.640220000001277e-06
+        rotation 0.9999999999998924 -3.2765733789223654e-07 3.277112492656089e-07 1.5707999857593695
         children [
           USE WHEELSIZE
         ]
@@ -373,7 +373,7 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1000000000015456 0.12 4.130470000004354e-06
+        translation -0.1000000000015456 0.12 4.130470000004341e-06
         rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
         children [
           USE WHEELSIZE
@@ -389,10 +389,10 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "red,1,8"
+  customData "red,0,9"
 }
 Robot {
-  translation 2.05 -7.97 0.108801
+  translation 5.12 -0.02 0.108806
   rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
   children [
     DistanceSensor {
@@ -419,7 +419,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 0.9999999999999647 -1.8790074833068118e-07 1.879014359628332e-07 1.5707999856069208
+        rotation 0.9999999999999647 -1.8790074833068142e-07 1.879014359628331e-07 1.5707999856069164
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -452,8 +452,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.09999999999756642 -0.12 3.6402200000012706e-06
-        rotation 0.9999999999998924 -3.276573378922375e-07 3.277112492656089e-07 1.5707999857593695
+        translation 0.09999999999756642 -0.12 3.6402200000012765e-06
+        rotation 0.9999999999998924 -3.276573378922366e-07 3.277112492656089e-07 1.5707999857593695
         children [
           USE WHEELSIZE
         ]
@@ -496,7 +496,7 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1000000000015456 0.12 4.130470000004354e-06
+        translation -0.1000000000015456 0.12 4.130470000004342e-06
         rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
         children [
           USE WHEELSIZE
@@ -512,11 +512,11 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "red,2,8"
+  customData "red,5,0"
 }
 Robot {
-  translation 2.940030000282603 -9.020000000000035 0.09880516132716563
-  rotation 7.628491826564971e-08 -1.149339611637448e-06 0.9999999999993368 1.5708000000005347
+  translation 3e-05 -3.14 0.0988088
+  rotation 7.62849182656497e-08 -1.1493396116374477e-06 0.9999999999993368 1.5708000000005344
   children [
     DistanceSensor {
     }
@@ -542,7 +542,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 1 3.136791804608803e-10 -3.1368019077271435e-10 1.5707999856068906
+        rotation 1 5.762915684194754e-10 -5.762935395824222e-10 1.5707999856068906
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -576,7 +576,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.09999999999999984 -0.12 3.6402200000020727e-06
-        rotation 1 6.582072096127841e-09 -6.529383695085761e-09 1.5707999857592636
+        rotation 1 6.581999161986383e-09 -6.529310760677428e-09 1.5707999857592636
         children [
           USE WHEELSIZE
         ]
@@ -598,7 +598,7 @@ Robot {
       ]
       endPoint Solid {
         translation -0.1 -0.12 0
-        rotation 1 3.134366992777655e-10 -3.1343847346964435e-10 1.570799983520293
+        rotation 1 5.758464504966758e-10 -5.75849184250711e-10 1.570799983520293
         children [
           USE WHEELSIZE
         ]
@@ -620,7 +620,7 @@ Robot {
       ]
       endPoint Solid {
         translation -0.10000000000000017 0.12 4.130470000004657e-06
-        rotation 1 -5.087435231815838e-09 5.1412821432314095e-09 1.5707999882284138
+        rotation 1 -5.087527429972476e-09 5.1413743417256236e-09 1.5707999882284138
         children [
           USE WHEELSIZE
         ]
@@ -635,10 +635,10 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "red,3,9"
+  customData "red,0,3"
 }
 Robot {
-  translation 3.34779e-05 -9.02 0.0988052
+  translation -0.129967 -6.01 0.098808
   rotation 7.628476053430804e-08 -1.149339785963148e-06 0.9999999999993366 1.5707997131026343
   children [
     DistanceSensor {
@@ -698,7 +698,7 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.09999999999988438 -0.12 3.640220000002077e-06
+        translation 0.09999999999988438 -0.12 3.6402200000020833e-06
         rotation 1 -9.27824189441685e-09 9.330988327888827e-09 1.5707999857592636
         children [
           USE WHEELSIZE
@@ -742,8 +742,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.10000000000014733 0.12 4.130470000004679e-06
-        rotation 0.9999999999999996 -2.2900123234135275e-08 2.2954035365643086e-08 1.5707999882284098
+        translation -0.10000000000014733 0.12 4.1304700000047045e-06
+        rotation 0.9999999999999997 -2.2900123234135338e-08 2.2954035365643093e-08 1.5707999882284052
         children [
           USE WHEELSIZE
         ]
@@ -758,10 +758,10 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "green,0,9"
+  customData "green,0,6"
 }
 Robot {
-  translation 1.00003 -9.02 0.0988052
+  translation 4.02003 -8.98 0.0988083
   rotation 7.628491710494937e-08 -1.1493396128274498e-06 0.9999999999993368 1.5708000000005298
   children [
     DistanceSensor {
@@ -788,7 +788,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 1 1.4596320075194674e-10 -1.4596359742142004e-10 1.5707999856068906
+        rotation 1 2.77329940120636e-10 -2.773308174371906e-10 1.5707999856068906
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -821,8 +821,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.0999999999999989 -0.12 3.6402200000020727e-06
-        rotation 1 6.457914636993619e-09 -6.405225781663003e-09 1.5707999857592636
+        translation 0.0999999999999979 -0.12 3.6402200000020727e-06
+        rotation 1 6.3263723416317945e-09 -6.273683004991726e-09 1.5707999857592636
         children [
           USE WHEELSIZE
         ]
@@ -844,7 +844,7 @@ Robot {
       ]
       endPoint Solid {
         translation -0.1 -0.12 0
-        rotation 1 1.458451104498689e-10 -1.4584627180420817e-10 1.570799983520293
+        rotation 1 2.77106204432971e-10 -2.771078457739638e-10 1.570799983520293
         children [
           USE WHEELSIZE
         ]
@@ -865,8 +865,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.10000000000000112 0.12 4.130470000004657e-06
-        rotation 1 -5.211700435677111e-09 5.2655478020822986e-09 1.5707999882284138
+        translation -0.10000000000000211 0.12 4.130470000004657e-06
+        rotation 1 -5.343378621514787e-09 5.397226470051769e-09 1.5707999882284138
         children [
           USE WHEELSIZE
         ]
@@ -881,10 +881,10 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "green,1,9"
+  customData "green,4,9"
 }
 Robot {
-  translation 2.0500292111085137 -9.020000000036767 0.09880516132716566
+  translation 4.02003 -0.02 0.0988176
   rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
   children [
     DistanceSensor {
@@ -911,7 +911,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 0.9999999999999647 -1.8790074833068118e-07 1.879014359628332e-07 1.5707999856069208
+        rotation 0.9999999999999647 -1.8790074833068145e-07 1.8790143596283312e-07 1.5707999856069161
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -944,8 +944,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.09999999999756642 -0.12 3.6402200000012706e-06
-        rotation 0.9999999999998924 -3.276573378922375e-07 3.277112492656089e-07 1.5707999857593695
+        translation 0.09999999999756642 -0.12 3.640220000001277e-06
+        rotation 0.9999999999998924 -3.2765733789223654e-07 3.277112492656089e-07 1.5707999857593695
         children [
           USE WHEELSIZE
         ]
@@ -988,7 +988,7 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1000000000015456 0.12 4.130470000004354e-06
+        translation -0.1000000000015456 0.12 4.130470000004341e-06
         rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
         children [
           USE WHEELSIZE
@@ -1004,10 +1004,10 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "red,2,9"
+  customData "red,4,0"
 }
 Robot {
-  translation 3.96003 -9.02 0.098805
+  translation 1.04003 -1.15 0.0988112
   rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
   children [
     DistanceSensor {
@@ -1034,7 +1034,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 0.9999999999999647 -1.8790074833068118e-07 1.879014359628332e-07 1.5707999856069208
+        rotation 0.9999999999999647 -1.8790074833068145e-07 1.8790143596283312e-07 1.5707999856069161
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -1067,8 +1067,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.09999999999756642 -0.12 3.6402200000012706e-06
-        rotation 0.9999999999998924 -3.276573378922375e-07 3.277112492656089e-07 1.5707999857593695
+        translation 0.09999999999756642 -0.12 3.640220000001277e-06
+        rotation 0.9999999999998924 -3.2765733789223654e-07 3.277112492656089e-07 1.5707999857593695
         children [
           USE WHEELSIZE
         ]
@@ -1111,7 +1111,7 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1000000000015456 0.12 4.130470000004354e-06
+        translation -0.1000000000015456 0.12 4.130470000004341e-06
         rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
         children [
           USE WHEELSIZE
@@ -1127,10 +1127,10 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "blue,4,9"
+  customData "blue,1,1"
 }
 Robot {
-  translation 4.99003 -9.02 0.108805
+  translation 4.99003 -8.94 0.108806
   rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
   children [
     DistanceSensor {
@@ -1157,7 +1157,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 0.9999999999999647 -1.8790074833068118e-07 1.879014359628332e-07 1.5707999856069208
+        rotation 0.9999999999999647 -1.8790074833068142e-07 1.879014359628331e-07 1.5707999856069164
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -1190,8 +1190,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.09999999999756642 -0.12 3.6402200000012706e-06
-        rotation 0.9999999999998924 -3.276573378922375e-07 3.277112492656089e-07 1.5707999857593695
+        translation 0.09999999999756642 -0.12 3.6402200000012765e-06
+        rotation 0.9999999999998924 -3.276573378922366e-07 3.277112492656089e-07 1.5707999857593695
         children [
           USE WHEELSIZE
         ]
@@ -1234,7 +1234,7 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1000000000015456 0.12 4.130470000004354e-06
+        translation -0.1000000000015456 0.12 4.130470000004342e-06
         rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
         children [
           USE WHEELSIZE
@@ -1253,7 +1253,7 @@ Robot {
   customData "blue,5,9"
 }
 Robot {
-  translation 5.98003 -9.02 0.108806
+  translation 10.95 -6.94 0.10881
   rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
   children [
     DistanceSensor {
@@ -1280,7 +1280,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 0.9999999999999647 -1.8790074833068118e-07 1.879014359628332e-07 1.5707999856069208
+        rotation 0.9999999999999647 -1.8790074833068142e-07 1.879014359628331e-07 1.5707999856069164
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -1313,8 +1313,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.09999999999756642 -0.12 3.6402200000012706e-06
-        rotation 0.9999999999998924 -3.276573378922375e-07 3.277112492656089e-07 1.5707999857593695
+        translation 0.09999999999756642 -0.12 3.6402200000012765e-06
+        rotation 0.9999999999998924 -3.276573378922366e-07 3.277112492656089e-07 1.5707999857593695
         children [
           USE WHEELSIZE
         ]
@@ -1357,7 +1357,7 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1000000000015456 0.12 4.130470000004354e-06
+        translation -0.1000000000015456 0.12 4.130470000004342e-06
         rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
         children [
           USE WHEELSIZE
@@ -1373,10 +1373,10 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "blue,6,9"
+  customData "blue,11,7"
 }
 Robot {
-  translation 7.07003 -9.02 0.098806
+  translation 1.02003 -8.95 0.0988001
   rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
   children [
     DistanceSensor {
@@ -1403,7 +1403,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 0.9999999999999647 -1.8790074833068118e-07 1.879014359628332e-07 1.5707999856069208
+        rotation 0.9999999999999647 -1.8790074833068145e-07 1.8790143596283312e-07 1.5707999856069161
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -1436,8 +1436,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.09999999999756642 -0.12 3.6402200000012706e-06
-        rotation 0.9999999999998924 -3.276573378922375e-07 3.277112492656089e-07 1.5707999857593695
+        translation 0.09999999999756642 -0.12 3.640220000001277e-06
+        rotation 0.9999999999998924 -3.2765733789223654e-07 3.277112492656089e-07 1.5707999857593695
         children [
           USE WHEELSIZE
         ]
@@ -1480,7 +1480,7 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1000000000015456 0.12 4.130470000004354e-06
+        translation -0.1000000000015456 0.12 4.130470000004341e-06
         rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
         children [
           USE WHEELSIZE
@@ -1496,10 +1496,10 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "blue,7,9"
+  customData "blue,1,9"
 }
 Robot {
-  translation 7.96003 -9.02 0.098806
+  translation 2.11003 -9 0.0988001
   rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
   children [
     DistanceSensor {
@@ -1526,7 +1526,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 0.9999999999999647 -1.8790074833068118e-07 1.879014359628332e-07 1.5707999856069208
+        rotation 0.9999999999999647 -1.8790074833068145e-07 1.8790143596283312e-07 1.5707999856069161
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -1559,8 +1559,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.09999999999756642 -0.12 3.6402200000012706e-06
-        rotation 0.9999999999998924 -3.276573378922375e-07 3.277112492656089e-07 1.5707999857593695
+        translation 0.09999999999756642 -0.12 3.640220000001277e-06
+        rotation 0.9999999999998924 -3.2765733789223654e-07 3.277112492656089e-07 1.5707999857593695
         children [
           USE WHEELSIZE
         ]
@@ -1603,7 +1603,7 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1000000000015456 0.12 4.130470000004354e-06
+        translation -0.1000000000015456 0.12 4.130470000004341e-06
         rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
         children [
           USE WHEELSIZE
@@ -1619,10 +1619,10 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "blue,8,9"
+  customData "blue,2,9"
 }
 Robot {
-  translation 8.96003 -9.02 0.098806
+  translation 9.11003 -0.16 0.0988163
   rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
   children [
     DistanceSensor {
@@ -1649,7 +1649,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 0.9999999999999647 -1.8790074833068118e-07 1.879014359628332e-07 1.5707999856069208
+        rotation 0.9999999999999647 -1.8790074833068145e-07 1.8790143596283312e-07 1.5707999856069161
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -1682,8 +1682,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.09999999999756642 -0.12 3.6402200000012706e-06
-        rotation 0.9999999999998924 -3.276573378922375e-07 3.277112492656089e-07 1.5707999857593695
+        translation 0.09999999999756642 -0.12 3.640220000001277e-06
+        rotation 0.9999999999998924 -3.2765733789223654e-07 3.277112492656089e-07 1.5707999857593695
         children [
           USE WHEELSIZE
         ]
@@ -1726,7 +1726,7 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1000000000015456 0.12 4.130470000004354e-06
+        translation -0.1000000000015456 0.12 4.130470000004341e-06
         rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
         children [
           USE WHEELSIZE
@@ -1742,10 +1742,10 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "green,9,9"
+  customData "green,9,0"
 }
 Robot {
-  translation 9.99 -9.02 0.088806
+  translation 5.03 -1.09 0.08881
   rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
   children [
     DistanceSensor {
@@ -1772,7 +1772,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 0.9999999999999647 -1.8790074833068118e-07 1.879014359628332e-07 1.5707999856069208
+        rotation 0.9999999999999647 -1.8790074833068145e-07 1.8790143596283312e-07 1.5707999856069161
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -1805,8 +1805,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.09999999999756642 -0.12 3.6402200000012706e-06
-        rotation 0.9999999999998924 -3.276573378922375e-07 3.277112492656089e-07 1.5707999857593695
+        translation 0.09999999999756642 -0.12 3.640220000001277e-06
+        rotation 0.9999999999998924 -3.2765733789223654e-07 3.277112492656089e-07 1.5707999857593695
         children [
           USE WHEELSIZE
         ]
@@ -1849,7 +1849,7 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1000000000015456 0.12 4.130470000004354e-06
+        translation -0.1000000000015456 0.12 4.130470000004341e-06
         rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
         children [
           USE WHEELSIZE
@@ -1865,10 +1865,10 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "green,10,9"
+  customData "green,5,1"
 }
 Robot {
-  translation 10.94 -9.02 0.088806
+  translation 12.01 -9.02 0.0888069
   rotation 7.628487834490508e-08 -1.1493395721791664e-06 0.9999999999993368 1.570800000003245
   children [
     DistanceSensor {
@@ -1895,7 +1895,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.1 0.12 0
-        rotation 0.9999999999999647 -1.8790074833068118e-07 1.879014359628332e-07 1.5707999856069208
+        rotation 0.9999999999999647 -1.8790074833068145e-07 1.8790143596283312e-07 1.5707999856069161
         children [
           DEF WHEELSIZE Shape {
             appearance PBRAppearance {
@@ -1928,8 +1928,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.09999999999756642 -0.12 3.6402200000012706e-06
-        rotation 0.9999999999998924 -3.276573378922375e-07 3.277112492656089e-07 1.5707999857593695
+        translation 0.09999999999756642 -0.12 3.640220000001277e-06
+        rotation 0.9999999999998924 -3.2765733789223654e-07 3.277112492656089e-07 1.5707999857593695
         children [
           USE WHEELSIZE
         ]
@@ -1972,7 +1972,7 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1000000000015456 0.12 4.130470000004354e-06
+        translation -0.1000000000015456 0.12 4.130470000004341e-06
         rotation 0.9999999999999631 -1.9216363728903724e-07 1.9221816916878313e-07 1.57079998822845
         children [
           USE WHEELSIZE
@@ -1988,5 +1988,5 @@ Robot {
   physics Physics {
   }
   controller "drive_robot"
-  customData "green,11,9"
+  customData "green,12,9"
 }

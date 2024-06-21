@@ -19,7 +19,7 @@ COLOR = data[0]
 NAME = robot.getName()
 
 # Websockets server URL
-server_url = "http://192.168.0.69:5000/";
+server_url = "http://127.0.0.1:5000/";
 
 # Calculate linear velocity and movement duration
 linear_velocity = WHEEL_RADIUS * MAX_SPEED
@@ -38,6 +38,13 @@ for motor in motors:
         raise ValueError("Error: One or more motors could not be found. Please check the device names.")
     motor.setPosition(float('inf'))
     motor.setVelocity(0.0)
+
+# Function to sleep without stopping webots
+def non_blocking_sleep(duration):
+    end_time = robot.getTime() + duration
+    while robot.step(TIME_STEP) != -1:
+        if robot.getTime() >= end_time:
+            break
 
 # Function to move a space forward
 def one_space():
@@ -127,6 +134,16 @@ def space_left():
     one_space()
     turn_right()
 
+def move_back():
+    non_blocking_sleep(7)
+    space_back()
+    non_blocking_sleep(7)
+    
+def move_forward():
+    non_blocking_sleep(7)
+    one_space()
+    non_blocking_sleep(7) 
+    
 
 # Get the direction the robot has to go
 def direction_fun(current_pos, next_pos):
@@ -165,6 +182,7 @@ def move_next_space():
           if all(key in robotReceived for key in ('name', 'current_position', 'next_position')):
     # Check if this robot has to move
               if robotReceived['name'] == NAME:
+                  print(robotReceived)
     # Check if the server knows the current location of the robot
                   if robotReceived['current_position'] == CURRENT_POS:
     # Drive the robot
@@ -172,9 +190,9 @@ def move_next_space():
                       print(direction)
                       match direction:
                           case "up":
-                              one_space()
+                              move_forward()
                           case "down":
-                              space_back()
+                              move_back()
                           case "right":
                               space_right()
                           case "left":
