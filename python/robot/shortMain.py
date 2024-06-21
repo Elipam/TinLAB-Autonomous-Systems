@@ -19,6 +19,8 @@ pwmR.freq(50)
 pwmL = PWM(Pin(7))
 pwmL.freq(50)
 
+steps = []
+
 # Verbinding maken met WiFi
 def connect_to_wifi():
     wlan = network.WLAN(network.STA_IF)
@@ -33,14 +35,17 @@ def connect_to_wifi():
 
 # Functie om GET-verzoek te behandelen en gegevens te verwerken
 def handle_get_request():
+    global steps
     try:
         url = f"http://{serverAddr}:{serverPort}/get_state"
         response = urequests.get(url)
         if response.status_code == 200:
             data = response.json()
             print("Ontvangen gegevens:", data)
-            for robot in data.get('robots', []):
-                print(f"Robot {robot['name']} heeft de volgende acties: {robot['next_steps']}")
+            for robot in data:
+                if robot.get('name') == 'Robot1':
+                    steps = robot.get('next_steps', [])
+                    print(f"Robot {robot['name']} heeft de volgende acties: {steps}")
         else:
             print("Mislukt om gegevens op te halen:", response.status_code)
     except Exception as e:
@@ -64,29 +69,29 @@ def execute_command(command):
 def MoveForward():
     print("Moving forward")
     pwmL.duty_u16(6000)
-    pwmR.duty_u16(3700)
-    time.sleep(2)
+    pwmR.duty_u16(3740)
+    time.sleep(0.75)
     pwmL.duty_u16(5000)
     pwmR.duty_u16(5000)
 
 def MoveBackward():
     pwmL.duty_u16(3700)
     pwmR.duty_u16(6000)
-    time.sleep(2)
+    time.sleep(0.15)
     pwmL.duty_u16(5000)
     pwmR.duty_u16(5000)
 
 def MoveLeft():
     pwmL.duty_u16(4300)
     pwmR.duty_u16(4300)
-    time.sleep(0.4)
+    time.sleep(0.52)
     pwmL.duty_u16(5000)
     pwmR.duty_u16(5000)
 
 def MoveRight():
     pwmL.duty_u16(5700)
     pwmR.duty_u16(5700)
-    time.sleep(0.31)
+    time.sleep(0.32)
     pwmL.duty_u16(5000)
     pwmR.duty_u16(5000)
 
@@ -101,8 +106,18 @@ wlan = connect_to_wifi()
 get_request_interval = 2  # Interval in seconden
 next_get_request_time = time.time() + get_request_interval
 
-while True:
+while not steps:  # Loop blijft draaien totdat 'steps' lijst is gevuld
     # Behandel GET-verzoeken op gespecificeerd interval
     if time.time() >= next_get_request_time:
         handle_get_request()
+        if steps:
+            print("Stappen:", steps)
+        else:
+            print("waiting")
         next_get_request_time = time.time() + get_request_interval
+
+for step in steps:
+    execute_command(step)
+    time.sleep(2)
+
+MoveBackward()
