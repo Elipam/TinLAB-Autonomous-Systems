@@ -66,43 +66,26 @@ class Pathfinding:
             row, col = value
             self.goal_grid[col][row] = key
 
-    def determine_goal(self, color):
+    def determine_goal(self, color, current_position):
+        min_heuristic = float('inf')
+        closest_goal = None
+        
         for key, value in self.picture.items():
-            if value[0] == color and value[1] == False:
-                self.picture[key] = [value[0], True]
+            if value[0] == color and not value[1]:
                 goal = [int(num.strip()) for num in key.split(',')]
-                print(f"Determine_goal {goal}")
-                return goal
-        return [-1, -1]
-
-    def algorithm(self):
-        next_grid = self.make_grid()
-        for key, value in self.current_positions.items():
-            row, col = value
-            if value == self.goal_positions[key]:
-                next_grid[col][row] = key
-                continue
-            min_heuristic = float('inf')
-            best_move = None
-            for move in self.possible_moves:
-                next_row, next_col = row + move[0], col + move[1]
-                if not (0 <= next_row < len(next_grid) and 0 <= next_col < len(next_grid[0])):
-                    continue
-                if next_grid[next_col][next_row] != 0:
-                    continue
-                h = self.heuristic((next_row, next_col), self.goal_positions[key])
+                h = self.heuristic(current_position, goal)
                 if h < min_heuristic:
                     min_heuristic = h
-                    best_move = move
-            if best_move:
-                next_row, next_col = row + best_move[0], col + best_move[1]
-                next_grid[next_col][next_row] = key
-                self.current_positions[key] = (next_row, next_col)
-
-        self.print_grid(next_grid)
-        if next_grid == self.goal_grid:
-            return
-        self.algorithm()
+                    closest_goal = goal
+        
+        if closest_goal:
+            # Mark the closest goal as checked
+            key = ','.join(map(str, closest_goal))
+            self.picture[key] = [color, True]
+            print(f"Determine_goal {closest_goal}")
+            return closest_goal
+        
+        return [-1, -1]
     
     def quick_move(self):
         self.robots_move = {'robots':[]}
@@ -111,7 +94,7 @@ class Pathfinding:
             pos, goal, color, direction = value
             x, y = pos
             if goal == [-1, -1]:
-                goal = self.determine_goal(color)
+                goal = self.determine_goal(color, pos)
                 print(f"quick_move {goal}")
                 if goal == [-1, -1]:
                     next_grid[y][x] = key
@@ -123,7 +106,7 @@ class Pathfinding:
                 next_x, next_y = x + move[0], y + move[1]
                 if not (0 <= next_y < len(next_grid) and 0 <= next_x < len(next_grid[0])):
                     continue
-                if next_grid[next_y][next_x] != 0:
+                if next_grid[next_y][next_x] != 0 and next_grid[next_y][next_x] != key:
                     continue
                 h = self.heuristic((next_x, next_y), goal)
                 if h < min_heuristic:
@@ -213,7 +196,7 @@ class RobotServer:
                 for robot in data['robots']:
                     if all(key in robot for key in ('name', 'color', 'current_position', 'angle')):
                         if robot['name'] not in self.board.robots:
-                            goal = self.board.determine_goal(robot['color'])
+                            goal = self.board.determine_goal(robot['color'], robot['current_position'])
                         else:
                             goal = self.board.robots[robot['name']][1]
                             last_pos = self.board.robots[robot['name']][0]
@@ -291,23 +274,23 @@ if __name__ == '__main__':
     time.sleep(2)
 
     picture_json = {
-        "picture": {
-            "3, 3": "Red",
-            "3, 4": "Blue",
-            "3, 5": "Green",
-            "3, 6": "Red",
-            "4, 3": "Red",
-            "4, 4": "Green",
-            "4, 5": "Green",
-            "4, 6": "Red",
-            "5, 3": "Blue",
-            "5, 4": "Green",
-            "5, 5": "Red",
-            "5, 6": "Blue",
-            "6, 3": "Blue",
-            "6, 4": "Red",
-            "6, 5": "Blue",
-            "6, 6": "Green"
+        'picture': {
+            '3, 3': 'red', 
+            '3, 4': 'green', 
+            '3, 5': 'blue', 
+            '3, 6': 'red', 
+            '4, 3': 'blue', 
+            '4, 4': 'red', 
+            '4, 5': 'green', 
+            '4, 6': 'blue', 
+            '5, 3': 'red', 
+            '5, 4': 'green', 
+            '5, 5': 'blue', 
+            '5, 6': 'red', 
+            '6, 3': 'green', 
+            '6, 4': 'blue', 
+            '6, 5': 'red', 
+            '6, 6': 'green'
         }
     }
 
