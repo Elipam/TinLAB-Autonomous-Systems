@@ -8,7 +8,7 @@ import urequests
 # Setup lokale netwerk en wifi-verbinding
 ssid = 'TP-Link_5114'
 password = '44908034'
-serverAddr = "192.168.0.25"
+serverAddr = "192.168.0.69"
 serverPort = 5000
 
 # Setup hardware
@@ -43,7 +43,7 @@ def handle_get_request():
             data = response.json()
             print("Ontvangen gegevens:", data)
             for robot in data:
-                if robot.get('name') == 'Robot1':
+                if robot.get('name') == 'Robot11':
                     steps = robot.get('next_steps', [])
                     print(f"Robot {robot['name']} heeft de volgende acties: {steps}")
         else:
@@ -67,9 +67,9 @@ def execute_command(command):
 
 # Definieer functies voor bewegingen
 def MoveForward():
-    pwmL.duty_u16(6000)
-    pwmR.duty_u16(3760)
-    time.sleep(0.75)
+    pwmL.duty_u16(5500)
+    pwmR.duty_u16(4335)
+    time.sleep(1.3)
     pwmL.duty_u16(5000)
     pwmR.duty_u16(5000)
 
@@ -81,16 +81,16 @@ def MoveBackward():
     pwmR.duty_u16(5000)
 
 def MoveLeft():
-    pwmL.duty_u16(4300)
-    pwmR.duty_u16(4300)
-    time.sleep(0.51)
+    pwmL.duty_u16(4500)
+    pwmR.duty_u16(4500)
+    time.sleep(0.68)
     pwmL.duty_u16(5000)
     pwmR.duty_u16(5000)
 
 def MoveRight():
-    pwmL.duty_u16(5700)
-    pwmR.duty_u16(5700)
-    time.sleep(0.32)
+    pwmL.duty_u16(5400)
+    pwmR.duty_u16(5400)
+    time.sleep(0.55)
     pwmL.duty_u16(5000)
     pwmR.duty_u16(5000)
 
