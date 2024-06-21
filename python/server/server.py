@@ -130,14 +130,15 @@ class Pathfinding:
                     min_heuristic = h
                     best_move = move
 
-            if not best_move:
+            if best_move == None:
                 move = [0,0]
-            next_x, next_y = x + best_move[0], y + best_move[1]
-            next_grid[next_y][next_x] = key
-            self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[next_x, next_y], "angle": direction})
-            
-            self.robots_step = {'robots':[]}
-            self.robots_step['robots'].append({"name":key, "next_steps":self.determine_steps(best_move, direction)}) 
+            if best_move:
+                next_x, next_y = x + best_move[0], y + best_move[1]
+                next_grid[next_y][next_x] = key
+                self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[next_x, next_y], "angle": direction})
+                
+                self.robots_step = {'robots':[]}
+                self.robots_step['robots'].append({"name":key, "next_steps":self.determine_steps(best_move, direction)}) 
 
         return self.robots_move
     
@@ -414,9 +415,9 @@ if __name__ == '__main__':
     url = 'http://127.0.0.1:5000/'
     response = requests.post(url + 'send_picture', json=picture_json)
 
-    response = requests.post(url + 'send_data', json=robots_json)
+    # response = requests.post(url + 'send_data', json=robots_json)
 
-    response = requests.get(url + 'get_data')
+    # response = requests.get(url + 'get_data')
     # Keep the main thread alive, ctrl and c to interrupt
     while True:
         time.sleep(1)
