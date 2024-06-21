@@ -205,7 +205,6 @@ class RobotServer:
         def index():
             return render_template('index.html', state=self.state)
 
-
     def run_flask_app(self):
         self.app.run(host='0.0.0.0', port=5000)
 
