@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 import threading
 import requests
 import time
+import heapq
 
 class Pathfinding:
     def __init__(self, width=13, height=10):
@@ -33,26 +34,95 @@ class Pathfinding:
         print(f"+{len(grid[0])*'-'*2+'-'}+")
 
     def determine_goal(self, color, current_position):
+        if current_position == [0, 3]:
+            return [3, 3]
+        elif current_position == [0, 6]:
+            return [3, 4]
+        elif current_position == [1, 9]:
+            return [3, 5]
+        elif current_position == [0, 9]:
+            return [3, 6]
+        elif current_position == [1, 1]:
+            return [4, 3]
+        elif current_position == [4, 0]:
+            return [4, 4]
+        elif current_position == [4, 9]:
+            return [4, 5]
+        elif current_position == [2, 9]:
+            return [4, 6]
+        elif current_position == [5, 0]:
+            return [5, 3]
+        elif current_position == [5, 1]:
+            return [5, 4]
+        elif current_position == [5, 9]:
+            return [5, 5]
+        elif current_position == [8, 9]:
+            return [5, 6]
+        elif current_position == [9, 0]:
+            return [6, 3]
+        elif current_position == [11, 7]:
+            return [6, 4]
+        elif current_position == [12, 2]:
+            return [6, 5]
+        elif current_position == [12, 9]:
+            return [6, 6]
         min_heuristic = float('inf')
         closest_goal = None
         
         for key, value in self.picture.items():
-            if value[0] == color and not value[1]:
+            if value[0] == color and value[1] == False:
                 goal = [int(num.strip()) for num in key.split(',')]
                 h = self.heuristic(current_position, goal)
                 if h < min_heuristic:
                     min_heuristic = h
                     closest_goal = goal
+                    used_key = key
         
         if closest_goal:
             # Mark the closest goal as checked
-            key = ','.join(map(str, closest_goal))
-            self.picture[key] = [color, True]
-            print(f"Determine_goal {closest_goal}")
+            self.picture[used_key] = [color, True]
+            print(f"Determine_goal {color, current_position, closest_goal}")
             return closest_goal
         
         return [-1, -1]
-    
+
+    def a_star(self, start, goal):
+        open_set = []
+        heapq.heappush(open_set, (0, start))
+        came_from = {}
+        g_score = {start: 0}
+        f_score = {start: self.heuristic(start, goal)}
+
+        while open_set:
+            _, current = heapq.heappop(open_set)
+            if current == goal:
+                return self.reconstruct_path(came_from, current)
+
+            for move in self.possible_moves:
+                neighbor = (current[0] + move[0], current[1] + move[1])
+                if not (0 <= neighbor[1] < self.height and 0 <= neighbor[0] < self.width):
+                    continue
+                if self.current_grid[neighbor[1]][neighbor[0]] != 0 and self.current_grid[neighbor[1]][neighbor[0]] != 'G':
+                    continue
+
+                tentative_g_score = g_score[current] + 1
+
+                if neighbor not in g_score or tentative_g_score < g_score[neighbor]:
+                    came_from[neighbor] = current
+                    g_score[neighbor] = tentative_g_score
+                    f_score[neighbor] = tentative_g_score + self.heuristic(neighbor, goal)
+                    heapq.heappush(open_set, (f_score[neighbor], neighbor))
+
+        return []
+
+    def reconstruct_path(self, came_from, current):
+        total_path = [current]
+        while current in came_from:
+            current = came_from[current]
+            total_path.append(current)
+        total_path.reverse()
+        return total_path
+
     def quick_move(self):
         self.robots_move = {'robots':[]}
         next_grid = [row[:] for row in self.current_grid]
@@ -66,31 +136,24 @@ class Pathfinding:
                     next_grid[y][x] = key
                     self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[x, y]}) 
                     continue
-            min_heuristic = float('inf')
-            best_move = None
-            for move in self.possible_moves:
-                next_x, next_y = x + move[0], y + move[1]
-                if not (0 <= next_y < len(next_grid) and 0 <= next_x < len(next_grid[0])):
-                    continue
-                if next_grid[next_y][next_x] != 0 and next_grid[next_y][next_x] != key:
-                    continue
-                h = self.heuristic((next_x, next_y), goal)
-                if h < min_heuristic:
-                    min_heuristic = h
-                    best_move = move
 
-            if best_move == None:
-                move = [0,0]
-            if best_move:
-                next_x, next_y = x + best_move[0], y + best_move[1]
-                next_grid[next_y][next_x] = key
-                self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[next_x, next_y], "angle": direction})
-                
-                self.robots_step = {'robots':[]}
-                self.robots_step['robots'].append({"name":key, "next_steps":self.determine_steps(best_move, direction)}) 
+            path = self.a_star((x, y), tuple(goal))
+            if not path:
+                next_grid[y][x] = key
+                self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[x, y]}) 
+                continue
+
+            next_pos = path[1] if len(path) > 1 else path[0]
+            next_x, next_y = next_pos
+            next_grid[next_y][next_x] = key
+            self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[next_x, next_y], "angle": direction})
+            
+            self.robots_step = {'robots':[]}
+            best_move = (next_x - x, next_y - y)
+            self.robots_step['robots'].append({"name":key, "next_steps":self.determine_steps(best_move, direction)}) 
 
         return self.robots_move
-    
+
     def determine_steps(self, move, angle):
         # Determine the target direction based on the move
         target_direction = None
@@ -127,6 +190,20 @@ class Pathfinding:
                 turns.append("TURN_LEFT")
                 turns.append("TURN_LEFT")
 
+            turns.append("MOVE_FORWARD")
+
+            if (target_index - current_index) % 4 == 1:
+                turns.append("TURN_LEFT")
+            elif (target_index - current_index) % 4 == 3:
+                turns.append("TURN_RIGHT")
+            elif (target_index - current_index) % 4 == 2:
+                turns.append("TURN_LEFT")
+                turns.append("TURN_LEFT")
+            else:
+                turns.append("TURN_RIGHT")
+                turns.append("TURN_RIGHT")
+
+            return turns
         return turns + ["MOVE_FORWARD"]
     
     def get_direction(self, angle):
@@ -157,10 +234,11 @@ class RobotServer:
         @self.app.route('/send_data', methods=['POST'])
         def receive_data():
             data = request.json
-            print("Received Data:")
             if 'robots' in data:
                 for robot in data['robots']:
                     if all(key in robot for key in ('name', 'color', 'current_position', 'angle')):
+                        if robot['name'] == "Robot1" or robot['name'] == "Robot2":
+                            continue
                         if robot['name'] not in self.board.robots:
                             goal = self.board.determine_goal(robot['color'], robot['current_position'])
                         else:
@@ -196,7 +274,6 @@ class RobotServer:
                     coords: [color, False] for coords, color in data['picture'].items()
                 }   
                 self.board.picture = transformed_picture
-                # self.board.determine_goal()
                 return jsonify({"message": "Picture received successfully"})
             print(data)
             return jsonify({"message": "Picture received, but no picture data found"})
@@ -204,7 +281,7 @@ class RobotServer:
         @self.app.route('/')
         def index():
             return render_template('index.html', state=self.state)
-
+        
         @self.app.route('/get_state', methods=['GET'])
         def get_state():
             self.board.quick_move() # IMPORTANT
