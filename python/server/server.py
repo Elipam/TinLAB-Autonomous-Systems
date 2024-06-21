@@ -106,11 +106,7 @@ class Pathfinding:
     
     def quick_move(self):
         self.robots_move = {'robots':[]}
-        next_grid = self.current_grid[:][:]
-        print("Current grid start quick_move")
-        self.print_grid()
-        print("Next grid start quick_move")
-        self.print_grid(next_grid)
+        next_grid = [row[:] for row in self.current_grid]
         for key, value in self.robots.items():
             pos, goal, color, direction = value
             x, y = pos
@@ -133,14 +129,16 @@ class Pathfinding:
                 if h < min_heuristic:
                     min_heuristic = h
                     best_move = move
-            if best_move:
-                next_x, next_y = x + best_move[0], y + best_move[1]
-                next_grid[next_y][next_x] = key
-                self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[next_x, next_y], "angle": direction})
-                
-                self.robots_step = {'robots':[]}
-                self.robots_step['robots'].append({"name":key, "next_steps":self.determine_steps(best_move, direction)}) 
-        print(f"quick move moves: {self.robots_move} : added1")
+
+            if not best_move:
+                move = [0,0]
+            next_x, next_y = x + best_move[0], y + best_move[1]
+            next_grid[next_y][next_x] = key
+            self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[next_x, next_y], "angle": direction})
+            
+            self.robots_step = {'robots':[]}
+            self.robots_step['robots'].append({"name":key, "next_steps":self.determine_steps(best_move, direction)}) 
+
         return self.robots_move
     
     def determine_steps(self, move, angle):
@@ -217,10 +215,15 @@ class RobotServer:
                             goal = self.board.determine_goal(robot['color'])
                         else:
                             goal = self.board.robots[robot['name']][1]
+                            last_pos = self.board.robots[robot['name']][0]
+                            self.board.current_grid[last_pos[1]][last_pos[0]] = 0
                         self.board.robots[robot['name']] = [robot['current_position'], goal, robot['color'], robot['angle']]
+                        new_pos = robot['current_position']
+                        self.board.current_grid[new_pos[1]][new_pos[0]] = robot['name']
+                                  
                     else:
                         print({'message': 'Data received successfully but keys are weird'})
-                        print(data)
+                        print(data)    
             else:
                 print(f"This is not a robots this is {data}")
                 return jsonify({'message': 'Data received but not processed'})
@@ -407,19 +410,13 @@ if __name__ == '__main__':
             }
         ]
     }
-    grid.print_grid()
+
     url = 'http://127.0.0.1:5000/'
     response = requests.post(url + 'send_picture', json=picture_json)
-    print(response.json())
 
-    grid.print_grid()
     response = requests.post(url + 'send_data', json=robots_json)
-    print(response.json())
-    grid.print_grid()
-    response = requests.get(url + 'get_data')
-    print(response.json())
-    grid.print_grid()
 
-    # Keep the main thread alive if necessary
+    response = requests.get(url + 'get_data')
+    # Keep the main thread alive, ctrl and c to interrupt
     while True:
         time.sleep(1)
