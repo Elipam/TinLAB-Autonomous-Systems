@@ -34,38 +34,6 @@ class Pathfinding:
         print(f"+{len(grid[0])*'-'*2+'-'}+")
 
     def determine_goal(self, color, current_position):
-        if current_position == [0, 3]:
-            return [3, 3]
-        elif current_position == [0, 6]:
-            return [3, 4]
-        elif current_position == [1, 9]:
-            return [3, 5]
-        elif current_position == [0, 9]:
-            return [3, 6]
-        elif current_position == [1, 1]:
-            return [4, 3]
-        elif current_position == [4, 0]:
-            return [4, 4]
-        elif current_position == [4, 9]:
-            return [4, 5]
-        elif current_position == [2, 9]:
-            return [4, 6]
-        elif current_position == [5, 0]:
-            return [5, 3]
-        elif current_position == [5, 1]:
-            return [5, 4]
-        elif current_position == [5, 9]:
-            return [5, 5]
-        elif current_position == [8, 9]:
-            return [5, 6]
-        elif current_position == [9, 0]:
-            return [6, 3]
-        elif current_position == [11, 7]:
-            return [6, 4]
-        elif current_position == [12, 2]:
-            return [6, 5]
-        elif current_position == [12, 9]:
-            return [6, 6]
         min_heuristic = float('inf')
         closest_goal = None
         
@@ -148,7 +116,6 @@ class Pathfinding:
             next_grid[next_y][next_x] = key
             self.robots_move['robots'].append({"name":key, "current_position":[x, y], "next_position":[next_x, next_y], "angle": direction})
             
-            self.robots_step = {'robots':[]}
             best_move = (next_x - x, next_y - y)
             self.robots_step['robots'].append({"name":key, "next_steps":self.determine_steps(best_move, direction)}) 
 
@@ -284,7 +251,7 @@ class RobotServer:
         
         @self.app.route('/get_state', methods=['GET'])
         def get_state():
-            self.board.quick_move() # IMPORTANT
+            # self.board.quick_move() # IMPORTANT
             return jsonify(self.board.robots_step['robots'])
         
         @self.app.route('/set_state', methods=['POST'])
@@ -305,29 +272,6 @@ if __name__ == '__main__':
     flask_thread.start()
     time.sleep(2)
 
-    picture_json = {
-        'picture': {
-            '3, 3': 'red', 
-            '3, 4': 'green', 
-            '3, 5': 'blue', 
-            '3, 6': 'red', 
-            '4, 3': 'blue', 
-            '4, 4': 'red', 
-            '4, 5': 'green', 
-            '4, 6': 'blue', 
-            '5, 3': 'red', 
-            '5, 4': 'green', 
-            '5, 5': 'blue', 
-            '5, 6': 'red', 
-            '6, 3': 'green', 
-            '6, 4': 'blue', 
-            '6, 5': 'red', 
-            '6, 6': 'green'
-        }
-    }
-
-    url = 'http://127.0.0.1:5000/'
-    response = requests.post(url + 'send_picture', json=picture_json)
     # Keep the main thread alive, ctrl and c to interrupt
     while True:
         time.sleep(1)
