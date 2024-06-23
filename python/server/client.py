@@ -145,11 +145,11 @@ robot_actions = {
     'robots': [
         {
             "name": "Robot1",
-            "next_steps": ['MOVE_RIGHT', 'MOVE_FORWARD', 'MOVE_RIGHT', 'MOVE_FORWARD', 'MOVE_LEFT', 'MOVE_FORWARD', 'MOVE_LEFT', 'MOVE_FORWARD', 'MOVE_RIGHT', 'MOVE_FORWARD', 'MOVE_RIGHT', 'MOVE_FORWARD', 'MOVE_RIGHT', 'MOVE_FORWARD', 'MOVE_LEFT', 'MOVE_FORWARD', 'MOVE_RIGHT', 'MOVE_FORWARD', 'MOVE_LEFT', 'MOVE_FORWARD']
+            "next_steps": ['MOVE_RIGHT', 'WAIT', 'MOVE_FORWARD']
         },
         {
             "name": "Robot2",
-            "next_steps": ['MOVE_RIGHT', 'MOVE_FORWARD', 'MOVE_RIGHT', 'MOVE_FORWARD', 'MOVE_LEFT', 'MOVE_FORWARD', 'MOVE_LEFT', 'MOVE_FORWARD', 'MOVE_RIGHT', 'MOVE_FORWARD', 'MOVE_RIGHT', 'MOVE_FORWARD', 'MOVE_RIGHT', 'MOVE_FORWARD', 'MOVE_LEFT', 'MOVE_FORWARD', 'MOVE_RIGHT', 'MOVE_FORWARD', 'MOVE_LEFT', 'MOVE_FORWARD']
+            "next_steps": ['MOVE_RIGHT', 'WAIT', 'MOVE_FORWARD']
         }
     ]
 }
