@@ -201,8 +201,6 @@ class RobotServer:
             if 'robots' in data:
                 for robot in data['robots']:
                     if all(key in robot for key in ('name', 'color', 'current_position', 'angle')):
-                        if robot['name'] == "Robot1" or robot['name'] == "Robot2":
-                            continue
                         if robot['name'] not in self.board.robots:
                             goal = self.board.determine_goal(robot['color'], robot['current_position'])
                         else:
@@ -224,20 +222,13 @@ class RobotServer:
 
         @self.app.route('/get_data', methods=['GET'])
         def send_data():
-            client_ip = request.remote_addr
-            print(f"Next step requested from IP: {client_ip}")
-            data = self.board.quick_move()
-            # print(f"Sending to simulation {data}")
-            return jsonify(data)
+            return jsonify(self.board.quick_move())
 
         @self.app.route('/send_picture', methods=['POST'])
         def receive_picture():
             data = request.json
             if 'picture' in data:
-                transformed_picture = {
-                    coords: [color, False] for coords, color in data['picture'].items()
-                }   
-                self.board.picture = transformed_picture
+                self.board.picture = {coords: [color, False] for coords, color in data['picture'].items()}   
                 return jsonify({"message": "Picture received successfully"})
             print(data)
             return jsonify({"message": "Picture received, but no picture data found"})
@@ -249,7 +240,7 @@ class RobotServer:
         @self.app.route('/set_state', methods=['POST'])
         def receive_state():
             self.board.robots_step = request.json
-            return jsonify({'state': self.board.robots_step})
+            return jsonify(self.board.robots_step)
 
     def run_flask_app(self):
         self.app.run(host='0.0.0.0', port=5000)
