@@ -7,6 +7,7 @@ Created on Thu Jun  6 14:32:41 2024
 import json
 import time
 import requests
+import random
 
 picture_json = {
   "picture": {
@@ -131,7 +132,7 @@ robots_json = {
   ]
 }
 
-url = 'http://192.168.0.25:5000/'
+url = 'http://192.168.68.56:5000/'
 # response = requests.post(url + 'send_data', json=robots_json)
 # print(response.json())
 
@@ -140,22 +141,27 @@ url = 'http://192.168.0.25:5000/'
 
 # response = requests.post(url + 'set_state', {'state': 'MOVE_FORWARD'})
 # print(response.json())
+global command
 
-robot_actions = {
-    'robots': [
+def randomize_next_step():
+    commands = ['MOVE_RIGHT', 'WAIT', 'MOVE_FORWARD', 'MOVE_LEFT']
+    command = random.choice(commands) 
+    return [command] 
+
+while True:
+    robot_actions = {
+      'robots': [
         {
             "name": "Robot1",
-            "next_steps": ['MOVE_RIGHT', 'WAIT', 'MOVE_FORWARD']
+            "next_steps": randomize_next_step()
         },
         {
             "name": "Robot2",
             "next_steps": ['MOVE_RIGHT', 'WAIT', 'MOVE_FORWARD']
         }
-    ]
-}
-
-while True:
-    # POST-aanvraag naar de 'set_state' route
+      ]
+    }
+    
     response = requests.post(url + 'set_state', json=robot_actions)
     if response.status_code == 200:
         try:
@@ -164,5 +170,6 @@ while True:
             print("Failed to decode JSON from response")
     else:
         print(f"POST request failed with status {response.status_code}")
+    print(robot_actions)
     
     time.sleep(4)

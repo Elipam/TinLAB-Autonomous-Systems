@@ -6,9 +6,9 @@ import time
 import urequests
 
 # Setup lokale netwerk en wifi-verbinding
-ssid = 'TP-Link_5114'
-password = '44908034'
-serverAddr = "192.168.0.69"
+ssid = 'De Froststreet 74'
+password = 'Paultje4Life'
+serverAddr = "192.168.68.56"
 serverPort = 5000
 
 # Setup hardware
@@ -35,21 +35,18 @@ def connect_to_wifi():
 
 # Functie om GET-verzoek te behandelen en gegevens te verwerken
 def handle_get_request():
-    global steps
-    try:
-        url = f"http://{serverAddr}:{serverPort}/get_state"
-        response = urequests.get(url)
-        if response.status_code == 200:
-            data = response.json()
-            print("Ontvangen gegevens:", data)
-            for robot in data:
-                if robot.get('name') == 'Robot11':
-                    steps = robot.get('next_steps', [])
-                    print(f"Robot {robot['name']} heeft de volgende acties: {steps}")
-        else:
-            print("Mislukt om gegevens op te halen:", response.status_code)
-    except Exception as e:
-        print("Fout bij ophalen van gegevens:", e)
+    global steps  # Gebruik een globale variabele voor de stappen
+    url = f"http://{serverAddr}:{serverPort}/get_state"
+    response = urequests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        print("Ontvangen gegevens:", data)
+        if 'robots' not in data:
+            return
+        for robot in data['robots']:
+            if robot.get('name') == 'Robot1':
+                steps = robot.get('next_steps', [])  # Sla de 'next_steps' op in de globale 'steps'
+                print(f"Robot {robot['name']} heeft de volgende acties: {steps}")
 
 # Functie om commando's uit te voeren
 def execute_command(command):
@@ -104,23 +101,12 @@ led2.on()
 # Verbinding maken met WiFi
 wlan = connect_to_wifi()
 
-# Hoofdloop voor periodieke GET-verzoeken
-get_request_interval = 2  # Interval in seconden
-next_get_request_time = time.time() + get_request_interval
-
-while not steps:  # Loop blijft draaien totdat 'steps' lijst is gevuld
-    # Behandel GET-verzoeken op gespecificeerd interval
-    if time.time() >= next_get_request_time:
-        handle_get_request()
-        if steps:
-            print("Stappen:", steps)
-        else:
-            print("waiting")
-        next_get_request_time = time.time() + get_request_interval
-
-for step in steps:
-    execute_command(step)
-    time.sleep(1)
-
-MoveBackward()
-
+while True:
+    steps = []  # Reset 'steps' elke iteratie
+    handle_get_request()
+    print(steps)
+    if steps:  # Controleer of 'steps' niet leeg is
+        for command in steps:
+            execute_command(command)
+            time.sleep(1)
+    time.sleep(0.5)  # Pauzeer na elke iteratie van de while loop
