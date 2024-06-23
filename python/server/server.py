@@ -1,6 +1,5 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
 import threading
-import requests
 import time
 import heapq
 
@@ -192,10 +191,8 @@ class Pathfinding:
 class RobotServer:
     def __init__(self, pathfinding_instance):
         self.app = Flask(__name__)
-        self.ip_list = []
         self.board = pathfinding_instance
         self.setup_routes()
-        self.state = "initial_state"
 
     def setup_routes(self):
         @self.app.route('/send_data', methods=['POST'])
@@ -244,18 +241,13 @@ class RobotServer:
                 return jsonify({"message": "Picture received successfully"})
             print(data)
             return jsonify({"message": "Picture received, but no picture data found"})
-
-        @self.app.route('/')
-        def index():
-            return render_template('index.html', state=self.state)
         
         @self.app.route('/get_state', methods=['GET'])
-        def get_state():
-            # self.board.quick_move() # IMPORTANT
+        def send_state():
             return jsonify(self.board.robots_step['robots'])
         
         @self.app.route('/set_state', methods=['POST'])
-        def set_state():
+        def receive_state():
             self.board.robots_step = request.json
             return jsonify({'state': self.board.robots_step})
 
