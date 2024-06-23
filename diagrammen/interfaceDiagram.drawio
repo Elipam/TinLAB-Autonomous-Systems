@@ -1,0 +1,71 @@
+<mxfile host="Electron" modified="2024-06-22T20:23:11.846Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.5.3 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="xa2crZDFNdZhP1TG2WvV" version="24.5.3" type="device">
+  <diagram name="Page-1" id="ZcGxNJDd82AAUUp8Ytdp">
+    <mxGraphModel dx="1050" dy="621" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="MQUS9T37lupT_iV5vNJo-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="MQUS9T37lupT_iV5vNJo-1" target="MQUS9T37lupT_iV5vNJo-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-1" value="Wheels execute&lt;div&gt;command&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="420" width="121" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-2" value="LEDs" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="150" width="121" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="MQUS9T37lupT_iV5vNJo-3" target="MQUS9T37lupT_iV5vNJo-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-5" value="Turn on" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="MQUS9T37lupT_iV5vNJo-4">
+          <mxGeometry x="0.0667" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="MQUS9T37lupT_iV5vNJo-3" target="MQUS9T37lupT_iV5vNJo-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="MQUS9T37lupT_iV5vNJo-3" target="MQUS9T37lupT_iV5vNJo-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-24" value="GET requests" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="MQUS9T37lupT_iV5vNJo-23">
+          <mxGeometry x="-0.0509" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-3" value="Rasberry pi pico&lt;div&gt;connected to&lt;/div&gt;&lt;div&gt;local network&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="270" width="121" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="MQUS9T37lupT_iV5vNJo-15" target="MQUS9T37lupT_iV5vNJo-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-18" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="MQUS9T37lupT_iV5vNJo-17">
+          <mxGeometry x="0.1556" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="MQUS9T37lupT_iV5vNJo-15" target="MQUS9T37lupT_iV5vNJo-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-20" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="MQUS9T37lupT_iV5vNJo-19">
+          <mxGeometry x="-0.5513" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-15" value="Received&amp;nbsp;&lt;div&gt;command?&lt;/div&gt;" style="shape=rhombus;html=1;dashed=0;whiteSpace=wrap;perimeter=rhombusPerimeter;" vertex="1" parent="1">
+          <mxGeometry x="220" y="370" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="MQUS9T37lupT_iV5vNJo-21" target="MQUS9T37lupT_iV5vNJo-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-26" value="POST responses" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="MQUS9T37lupT_iV5vNJo-25">
+          <mxGeometry x="0.0069" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQUS9T37lupT_iV5vNJo-21" value="server" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="270" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
